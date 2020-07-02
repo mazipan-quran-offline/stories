@@ -1,25 +1,21 @@
 {
-  "name": "stories",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/mazipan-quran-offline/stories.git",
-  "author": "Irfan Maulana <mazipan.space>",
-  "license": "MIT",
-  "private": false,
-  "scripts": {
+	"name": "stories",
+	"version": "1.0.0",
+	"main": "index.js",
+	"repository": "https://github.com/mazipan-quran-offline/stories.git",
+	"author": "Irfan Maulana <mazipan.space>",
+	"license": "MIT",
+	"private": false,
+	"scripts": {
+		"copy:files": "copyfiles src/assets/** dist -f",
 		"dev": "NODE_ENV=development parcel src/index.html src/**/*.html",
 		"build": "rimraf dist && parcel build src/index.html src/**/*.html --public-url https://www.baca-quran.id/stories/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"staticFiles": {
-		"staticPath": [
-			"src/assets"
-		]
-	},
-  "devDependencies": {
-    "parcel": "^1.12.4",
-    "parcel-bundler": "^1.12.4",
-		"parcel-plugin-static-files-copy": "^2.3.1",
-    "rimraf": "^3.0.2"
-  }
+	"devDependencies": {
+		"copyfiles": "^2.3.0",
+		"parcel": "^1.12.4",
+		"parcel-bundler": "^1.12.4",
+		"rimraf": "^3.0.2"
+	}
 }
