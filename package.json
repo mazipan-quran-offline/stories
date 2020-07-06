@@ -8,7 +8,7 @@
 	"private": false,
 	"scripts": {
 		"cleanup": "rimraf dist",
-		"copy:index": "copyfiles src/index.html dist -f",
+		"copy:index": "copyfiles src/index.html src/sitemap.xml dist -f",
 		"copy:files": "copyfiles -u 1 src/**/*.html dist",
 		"dev": "NODE_ENV=development parcel src/index.html src/**/*.html",
 		"build": "yarn cleanup && yarn copy:index && yarn copy:files",
