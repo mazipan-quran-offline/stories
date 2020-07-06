@@ -7,9 +7,12 @@
 	"license": "MIT",
 	"private": false,
 	"scripts": {
-		"copy:files": "copyfiles src/assets/** dist -f",
+		"cleanup": "rimraf dist",
+		"copy:index": "copyfiles src/index.html dist -f",
+		"copy:files": "copyfiles -u 1 src/**/*.html dist",
 		"dev": "NODE_ENV=development parcel src/index.html src/**/*.html",
-		"build": "rimraf dist && parcel build src/index.html src/**/*.html --public-url https://www.baca-quran.id/stories/",
+		"build": "yarn cleanup && yarn copy:index && yarn copy:files",
+		"build:parcel": "rimraf dist && parcel build src/index.html src/**/*.html --public-url https://www.baca-quran.id/stories/",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"devDependencies": {
