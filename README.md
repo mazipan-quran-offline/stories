@@ -6,6 +6,15 @@
 
 <https://www.baca-quran.id/stories/>
 
+## Blog
+
+- Repo: https://github.com/mazipan-quran-offline/tulisan
+- Live: https://www.baca-quran.id/tulisan/
+
+## Baca-Quran.id
+
+- Repo: https://github.com/mazipan/baca-quran.id
+- Live: https://www.baca-quran.id/
 
 ## Support me
 
