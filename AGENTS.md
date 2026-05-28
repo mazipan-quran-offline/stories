@@ -40,6 +40,7 @@ for local development and the optional `build:parcel` pipeline.
 | Format check (CI gate) | `pnpm run format:check` |
 | Lint | `pnpm run lint` |
 | Format + lint + autofix | `pnpm run check` |
+| Validate AMP stories (CI gate) | `pnpm run validate` |
 
 ## Layout
 
@@ -128,7 +129,11 @@ smaller — each page is sized to its own content, not a single fixed value.
    `<ul class="cards">`; the rest of the page (styles, footer, scripts) is a
    normal hand-edited template. The step is intentionally NOT part of the build,
    so run it locally whenever `content.json` changes.
-4. **Verify** — run `pnpm run build` (this regenerates `src/sitemap.xml`) and
+4. **Validate** — run `pnpm run validate`. Every AMP story must pass the
+   official `amphtml-validator`; an invalid document stops the AMP runtime from
+   upgrading components like `amp-fit-text`, which silently hides the verse text.
+   This is a CI gate, so a failing story will block the deploy.
+5. **Verify** — run `pnpm run build` (this regenerates `src/sitemap.xml`) and
    confirm `dist/<slug>/index.html` and the new sitemap entry exist.
 
 > `src/sitemap.xml` is fully generated — don't hand-edit it. In `src/index.html`,
@@ -156,8 +161,8 @@ smaller — each page is sized to its own content, not a single fixed value.
    `package.json` edits).
 3. `pnpm run format:check` — must pass; run `pnpm run format` locally if it
    fails.
-4. `pnpm run build` → publishes `./dist` to GitHub Pages via
-   `peaceiris/actions-gh-pages@v4`.
+4. `pnpm run validate` — every AMP story must pass `amphtml-validator`.
+5. `pnpm run build` → publishes `./dist` to GitHub Pages.
 
 ## Don'ts
 

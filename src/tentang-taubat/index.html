@@ -105,15 +105,13 @@
 			height: 100%;
 			box-sizing: border-box;
 			display: flex;
-			flex-direction: column;
-			justify-content: center;
 			padding: 0.9rem 0.75rem;
 		}
 
 		.panel {
+			flex: 1 1 auto;
 			display: flex;
 			flex-direction: column;
-			max-height: 100%;
 			box-sizing: border-box;
 			background: rgba(0, 0, 0, 0.36);
 			border-radius: 18px;
@@ -151,6 +149,7 @@
 		}
 
 		.cover {
+			justify-content: center;
 			text-align: center;
 		}
 
@@ -168,11 +167,13 @@
 			line-height: 1.55;
 		}
 
+		.brand-layer {
+			align-content: end;
+		}
+
 		.brand {
-			position: absolute;
-			bottom: 1.2rem;
-			left: 0;
-			right: 0;
+			width: 100%;
+			margin: 0 0 0.4rem 0;
 			text-align: center;
 			font-size: 0.72rem;
 			letter-spacing: 0.14em;
@@ -203,14 +204,15 @@
 					</div>
 				</div>
 			</amp-story-grid-layer>
-			<p class="brand">Baca-Quran.id</p>
+			<amp-story-grid-layer template="vertical" class="brand-layer">
+				<p class="brand">Baca-Quran.id</p>
+			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="az-zumar-53">
 			<amp-story-grid-layer template="fill">
 				<div class="page">
 					<div class="panel" animate-in="fly-in-top">
-						<p class="kicker">Taubat</p>
 						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="28" class="quote">"Wahai hamba-hamba-Ku yang melampaui batas terhadap diri mereka sendiri! Janganlah kamu berputus asa dari rahmat Allah. Sesungguhnya Allah mengampuni dosa-dosa semuanya. Sungguh, Dialah Yang Maha Pengampun, Maha Penyayang."</amp-fit-text>
 						<a class="ref" href="https://www.baca-quran.id/surah/39/53/" target="_blank" rel="noopener">Baca QS. Az-Zumar: 53 ↗</a>
 					</div>
@@ -222,7 +224,6 @@
 			<amp-story-grid-layer template="fill">
 				<div class="page">
 					<div class="panel" animate-in="fly-in-bottom">
-						<p class="kicker">Taubat</p>
 						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="36" class="quote">"Wahai orang-orang yang beriman! Bertobatlah kepada Allah dengan tobat yang semurni-murninya, mudah-mudahan Tuhanmu akan menghapus kesalahan-kesalahanmu."</amp-fit-text>
 						<a class="ref" href="https://www.baca-quran.id/surah/66/8/" target="_blank" rel="noopener">Baca QS. At-Tahrim: 8 ↗</a>
 					</div>
@@ -234,7 +235,6 @@
 			<amp-story-grid-layer template="fill">
 				<div class="page">
 					<div class="panel" animate-in="fly-in-top">
-						<p class="kicker">Taubat</p>
 						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="36" class="quote">"Dan bertobatlah kamu semua kepada Allah, wahai orang-orang yang beriman, agar kamu beruntung."</amp-fit-text>
 						<a class="ref" href="https://www.baca-quran.id/surah/24/31/" target="_blank" rel="noopener">Baca QS. An-Nur: 31 ↗</a>
 					</div>
@@ -246,7 +246,6 @@
 			<amp-story-grid-layer template="fill">
 				<div class="page">
 					<div class="panel" animate-in="fly-in-bottom">
-						<p class="kicker">Taubat</p>
 						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="46" class="quote">"Sungguh, Allah menyukai orang yang bertobat dan menyukai orang yang menyucikan diri."</amp-fit-text>
 						<a class="ref" href="https://www.baca-quran.id/surah/2/222/" target="_blank" rel="noopener">Baca QS. Al-Baqarah: 222 ↗</a>
 					</div>
@@ -258,7 +257,6 @@
 			<amp-story-grid-layer template="fill">
 				<div class="page">
 					<div class="panel" animate-in="fly-in-top">
-						<p class="kicker">Taubat</p>
 						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="36" class="quote">"Dan hendaklah kamu memohon ampun kepada Tuhanmu dan bertobat kepada-Nya, niscaya Dia akan memberi kenikmatan yang baik kepadamu sampai waktu yang telah ditentukan."</amp-fit-text>
 						<a class="ref" href="https://www.baca-quran.id/surah/11/3/" target="_blank" rel="noopener">Baca QS. Hud: 3 ↗</a>
 					</div>

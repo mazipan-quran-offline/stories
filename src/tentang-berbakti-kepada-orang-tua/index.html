@@ -105,15 +105,13 @@
 			height: 100%;
 			box-sizing: border-box;
 			display: flex;
-			flex-direction: column;
-			justify-content: center;
 			padding: 0.9rem 0.75rem;
 		}
 
 		.panel {
+			flex: 1 1 auto;
 			display: flex;
 			flex-direction: column;
-			max-height: 100%;
 			box-sizing: border-box;
 			background: rgba(0, 0, 0, 0.36);
 			border-radius: 18px;
@@ -151,6 +149,7 @@
 		}
 
 		.cover {
+			justify-content: center;
 			text-align: center;
 		}
 
@@ -168,11 +167,13 @@
 			line-height: 1.55;
 		}
 
+		.brand-layer {
+			align-content: end;
+		}
+
 		.brand {
-			position: absolute;
-			bottom: 1.2rem;
-			left: 0;
-			right: 0;
+			width: 100%;
+			margin: 0 0 0.4rem 0;
 			text-align: center;
 			font-size: 0.72rem;
 			letter-spacing: 0.14em;
@@ -203,14 +204,15 @@
 					</div>
 				</div>
 			</amp-story-grid-layer>
-			<p class="brand">Baca-Quran.id</p>
+			<amp-story-grid-layer template="vertical" class="brand-layer">
+				<p class="brand">Baca-Quran.id</p>
+			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="al-isra-23">
 			<amp-story-grid-layer template="fill">
 				<div class="page">
 					<div class="panel" animate-in="fly-in-top">
-						<p class="kicker">Birrul Walidain</p>
 						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="24" class="quote">"Dan Tuhanmu telah memerintahkan agar kamu jangan menyembah selain Dia dan hendaklah berbuat baik kepada ibu bapak. Jika salah seorang di antara keduanya atau kedua-duanya sampai berusia lanjut dalam pemeliharaanmu, maka janganlah sekali-kali engkau mengatakan kepada keduanya perkataan 'ah' dan janganlah engkau membentak keduanya, dan ucapkanlah kepada keduanya perkataan yang baik."</amp-fit-text>
 						<a class="ref" href="https://www.baca-quran.id/surah/17/23/" target="_blank" rel="noopener">Baca QS. Al-Isra: 23 ↗</a>
 					</div>
@@ -222,7 +224,6 @@
 			<amp-story-grid-layer template="fill">
 				<div class="page">
 					<div class="panel" animate-in="fly-in-bottom">
-						<p class="kicker">Birrul Walidain</p>
 						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="28" class="quote">"Dan rendahkanlah dirimu terhadap keduanya dengan penuh kasih sayang dan ucapkanlah, 'Wahai Tuhanku! Sayangilah keduanya sebagaimana mereka berdua telah mendidik aku pada waktu kecil.'"</amp-fit-text>
 						<a class="ref" href="https://www.baca-quran.id/surah/17/24/" target="_blank" rel="noopener">Baca QS. Al-Isra: 24 ↗</a>
 					</div>
@@ -234,7 +235,6 @@
 			<amp-story-grid-layer template="fill">
 				<div class="page">
 					<div class="panel" animate-in="fly-in-top">
-						<p class="kicker">Birrul Walidain</p>
 						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="28" class="quote">"Dan Kami perintahkan kepada manusia (agar berbuat baik) kepada kedua orang tuanya. Ibunya telah mengandungnya dalam keadaan lemah yang bertambah-tambah, dan menyapihnya dalam usia dua tahun. Bersyukurlah kepada-Ku dan kepada kedua orang tuamu. Hanya kepada Aku kembalimu."</amp-fit-text>
 						<a class="ref" href="https://www.baca-quran.id/surah/31/14/" target="_blank" rel="noopener">Baca QS. Luqman: 14 ↗</a>
 					</div>
@@ -246,7 +246,6 @@
 			<amp-story-grid-layer template="fill">
 				<div class="page">
 					<div class="panel" animate-in="fly-in-bottom">
-						<p class="kicker">Birrul Walidain</p>
 						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="46" class="quote">"Dan Kami wajibkan kepada manusia (berbuat) kebaikan kepada kedua orang tuanya."</amp-fit-text>
 						<a class="ref" href="https://www.baca-quran.id/surah/29/8/" target="_blank" rel="noopener">Baca QS. Al-Ankabut: 8 ↗</a>
 					</div>
@@ -258,7 +257,6 @@
 			<amp-story-grid-layer template="fill">
 				<div class="page">
 					<div class="panel" animate-in="fly-in-top">
-						<p class="kicker">Birrul Walidain</p>
 						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="28" class="quote">"Dan sembahlah Allah dan janganlah kamu mempersekutukan-Nya dengan sesuatu apa pun. Dan berbuat baiklah kepada kedua orang tua, karib kerabat, anak-anak yatim, dan orang-orang miskin."</amp-fit-text>
 						<a class="ref" href="https://www.baca-quran.id/surah/4/36/" target="_blank" rel="noopener">Baca QS. An-Nisa: 36 ↗</a>
 					</div>

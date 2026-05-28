@@ -23,10 +23,12 @@
     "format:check": "biome format .",
     "lint": "biome lint .",
     "check": "biome check --write .",
+    "validate": "node scripts/validate-amp.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.16",
+    "amphtml-validator": "^1.0.38",
     "copyfiles": "^2.4.1",
     "parcel": "^2.16.4",
     "rimraf": "^6.1.3"
