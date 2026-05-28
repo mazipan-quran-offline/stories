@@ -32,13 +32,26 @@ function escapeHtml(value) {
     .replace(/"/g, '&quot;');
 }
 
+// Inline SVGs reused across every card (kept here so the generated markup
+// matches the hand-written template exactly).
+const ICON_BOOK =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>';
+const ICON_ARROW =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>';
+
 function renderCard(story) {
-  return `				<li class="card" style="background-image: ${story.gradient};">
-					<a href="/stories/${story.slug}/">
-						<h3>${escapeHtml(story.title)}</h3>
+  return `				<li class="card">
+					<a class="card-link" href="/stories/${story.slug}/">
+						<span class="card-cover" style="background-image: ${story.gradient};" aria-hidden="true">
+							<span class="badge">${ICON_BOOK}</span>
+						</span>
+						<span class="card-content">
+							<time class="card-date">${formatDateID(story.publishedDate)}</time>
+							<h3 class="card-title">${escapeHtml(story.title)}</h3>
+							<p class="card-desc">${escapeHtml(story.description)}</p>
+							<span class="card-cta">Baca cerita ${ICON_ARROW}</span>
+						</span>
 					</a>
-					<small>${formatDateID(story.publishedDate)}</small>
-					<p>${escapeHtml(story.description)}</p>
 				</li>`;
 }
 
