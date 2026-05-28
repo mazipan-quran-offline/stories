@@ -105,15 +105,13 @@
 			height: 100%;
 			box-sizing: border-box;
 			display: flex;
-			flex-direction: column;
-			justify-content: center;
 			padding: 0.9rem 0.75rem;
 		}
 
 		.panel {
+			flex: 1 1 auto;
 			display: flex;
 			flex-direction: column;
-			max-height: 100%;
 			box-sizing: border-box;
 			background: rgba(0, 0, 0, 0.36);
 			border-radius: 18px;
@@ -151,6 +149,7 @@
 		}
 
 		.cover {
+			justify-content: center;
 			text-align: center;
 		}
 
@@ -168,11 +167,13 @@
 			line-height: 1.55;
 		}
 
+		.brand-layer {
+			align-content: end;
+		}
+
 		.brand {
-			position: absolute;
-			bottom: 1.2rem;
-			left: 0;
-			right: 0;
+			width: 100%;
+			margin: 0 0 0.4rem 0;
 			text-align: center;
 			font-size: 0.72rem;
 			letter-spacing: 0.14em;
@@ -203,7 +204,9 @@
 					</div>
 				</div>
 			</amp-story-grid-layer>
-			<p class="brand">Baca-Quran.id</p>
+			<amp-story-grid-layer template="vertical" class="brand-layer">
+				<p class="brand">Baca-Quran.id</p>
+			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="al-isra-23">
