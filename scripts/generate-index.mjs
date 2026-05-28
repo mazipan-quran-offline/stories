@@ -1,21 +1,58 @@
-<!DOCTYPE html>
+#!/usr/bin/env node
+// Regenerates src/index.html (the landing page) from content.json.
+//
+// This is an on-demand sync script — it is intentionally NOT part of `pnpm run build`.
+// Run it locally whenever content.json changes (new story, edited metadata) so the
+// landing page cards stay in sync with the actual story pages:
+//
+//   pnpm run generate:index
+//
+// Then commit the regenerated src/index.html.
+
+import { writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { formatDateID, loadContent, loadStories, REPO_ROOT } from './content.mjs';
+
+function escapeHtml(value) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function renderCard(story) {
+  return `				<li class="card" style="background-image: ${story.gradient};">
+					<a href="/stories/${story.slug}/">
+						<h3>${escapeHtml(story.title)}</h3>
+					</a>
+					<small>${formatDateID(story.publishedDate)}</small>
+					<p>${escapeHtml(story.description)}</p>
+				</li>`;
+}
+
+function buildIndex() {
+  const { site } = loadContent();
+  const cards = loadStories().map(renderCard).join('\n');
+
+  return `<!DOCTYPE html>
 <html lang="id-ID">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-	<title>Web Stories by Baca-Quran.id</title>
+	<title>${escapeHtml(site.title)}</title>
 
-	<meta itemprop="name" content="Web Stories by Baca-Quran.id">
-	<meta name="description" content="Kumpulan Stories yang diambil dari ayat-ayat Al-Quran" />
+	<meta itemprop="name" content="${escapeHtml(site.title)}">
+	<meta name="description" content="${escapeHtml(site.description)}" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:image" content="https://www.baca-quran.id/meta-image.png" />
 	<meta name="twitter:site" content="@maz_ipan" />
 
-	<meta property="og:title" content="Web Stories by Baca-Quran.id" />
-	<meta property="og:description" content="Kumpulan Stories yang diambil dari ayat-ayat Al-Quran" />
+	<meta property="og:title" content="${escapeHtml(site.title)}" />
+	<meta property="og:description" content="${escapeHtml(site.description)}" />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://www.baca-quran.id/stories/" />
+	<meta property="og:url" content="${site.baseUrl}/" />
 	<meta property="og:image" content="https://www.baca-quran.id/meta-image.png" />
 
 	<link rel='icon' type='image/png' href='https://www.baca-quran.id/icon-32.png'>
@@ -179,76 +216,7 @@
 		</header>
 		<article>
 			<ul class="cards">
-				<li class="card" style="background-image: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);">
-					<a href="/stories/tentang-silaturahmi/">
-						<h3>Tentang Silaturahmi</h3>
-					</a>
-					<small>27 Mei 2026</small>
-					<p>Kumpulan quote tentang silaturahmi yang diambil dari ayat-ayat Al-Quran</p>
-				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #c94b4b 0%, #4b134f 100%);">
-					<a href="/stories/tentang-berbakti-kepada-orang-tua/">
-						<h3>Tentang Berbakti kepada Orang Tua</h3>
-					</a>
-					<small>20 Mei 2026</small>
-					<p>Kumpulan quote tentang berbakti kepada orang tua yang diambil dari ayat-ayat Al-Quran</p>
-				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
-					<a href="/stories/tentang-jujur/">
-						<h3>Tentang Jujur</h3>
-					</a>
-					<small>13 Mei 2026</small>
-					<p>Kumpulan quote tentang jujur yang diambil dari ayat-ayat Al-Quran</p>
-				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
-					<a href="/stories/tentang-taubat/">
-						<h3>Tentang Taubat</h3>
-					</a>
-					<small>06 Mei 2026</small>
-					<p>Kumpulan quote tentang taubat yang diambil dari ayat-ayat Al-Quran</p>
-				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
-					<a href="/stories/tentang-ikhlas/">
-						<h3>Tentang Ikhlas</h3>
-					</a>
-					<small>29 April 2026</small>
-					<p>Kumpulan quote tentang ikhlas yang diambil dari ayat-ayat Al-Quran</p>
-				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #0ba360 0%, #3cba92 100%);">
-					<a href="/stories/tentang-tawakal/">
-						<h3>Tentang Tawakal</h3>
-					</a>
-					<small>22 April 2026</small>
-					<p>Kumpulan quote tentang tawakal yang diambil dari ayat-ayat Al-Quran</p>
-				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-					<a href="/stories/tentang-syukur/">
-						<h3>Tentang Syukur</h3>
-					</a>
-					<small>15 April 2026</small>
-					<p>Kumpulan quote tentang syukur yang diambil dari ayat-ayat Al-Quran</p>
-				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-					<a href="/stories/tentang-menuntut-ilmu/">
-						<h3>Tentang Menuntut Ilmu</h3>
-					</a>
-					<small>12 Juli 2020</small>
-					<p>Kumpulan quote tentang menuntut ilmu yang diambil dari ayat-ayat Al-Quran</p>
-				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);">
-					<a href="/stories/tentang-sedekah/">
-						<h3>Tentang Sedekah</h3>
-					</a>
-					<small>06 Juli 2020</small>
-					<p>Kumpulan quote tentang sedekah yang diambil dari ayat-ayat Al-Quran</p>
-				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-					<a href="/stories/tentang-sabar/">
-						<h3>Tentang Sabar</h3>
-					</a>
-					<small>02 Juli 2020</small>
-					<p>Kumpulan quote tentang sabar yang diambil dari ayat-ayat Al-Quran</p>
-				</li>
+${cards}
 			</ul>
 		</article>
 	</main>
@@ -288,3 +256,9 @@
 </body>
 
 </html>
+`;
+}
+
+const outPath = join(REPO_ROOT, 'src', 'index.html');
+writeFileSync(outPath, buildIndex());
+console.log(`Generated ${outPath}`);
