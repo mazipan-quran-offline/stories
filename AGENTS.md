@@ -32,6 +32,8 @@ for local development and the optional `build:parcel` pipeline.
 | --- | --- |
 | Install deps | `pnpm install` |
 | Dev server | `pnpm run dev` |
+| Regenerate landing page from `content.json` | `pnpm run generate:index` |
+| Regenerate sitemap from `content.json` | `pnpm run generate:sitemap` |
 | Production build (deploy artifact) | `pnpm run build` |
 | Parcel build (optimized HTML) | `pnpm run build:parcel` |
 | Format | `pnpm run format` |
@@ -42,22 +44,59 @@ for local development and the optional `build:parcel` pipeline.
 ## Layout
 
 ```
+content.json              # SINGLE SOURCE OF TRUTH for the story catalog (metadata)
+scripts/
+  content.mjs             # shared loader: reads content.json, sorts, formats dates
+  generate-index.mjs      # regenerates src/index.html (on-demand, NOT in build)
+  generate-sitemap.mjs    # regenerates src/sitemap.xml (runs during build)
 src/
-  index.html              # landing page (listed in copy:index)
-  sitemap.xml             # copied verbatim
-  <story-slug>/index.html # individual web story
+  index.html              # landing page template; only the card region is injected from content.json
+  sitemap.xml             # GENERATED from content.json, do not hand-edit
+  <story-slug>/index.html # individual web story (hand-written)
 .github/workflows/deploy.yml  # GH Pages deploy
 biome.json                # formatter + linter config
 pnpm-workspace.yaml       # holds allowBuilds / onlyBuiltDependencies
 ```
 
+## Content model (`content.json`)
+
+`content.json` is the single source of truth for the catalog. Each entry in
+`stories[]` carries the metadata used to build the landing page and sitemap:
+
+| Field | Example | Notes |
+| --- | --- | --- |
+| `slug` | `tentang-sabar` | Kebab-case; must match the `src/<slug>/` directory. |
+| `title` | `Tentang Sabar` | Shown on the card and used in the story `<title>`. |
+| `description` | `Kumpulan quote tentang sabar ...` | Card subtitle + meta description. |
+| `publishedDate` | `2020-07-02` | ISO `YYYY-MM-DD`. Drives sort order (newest first) and the Indonesian date shown on the card. |
+| `gradient` | `linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)` | The card background, ideally matching the story page's own gradient. |
+
+The landing page renders cards newest-first; pick `publishedDate` accordingly
+(roughly one-week gaps keep the timeline tidy).
+
 ## Adding a new story
 
-1. Create `src/<slug>/index.html` following the structure of existing stories
-   (e.g. `src/tentang-sabar/index.html`).
-2. Add a `<li>` entry on the landing page (`src/index.html`).
-3. Add a `<url>` entry in `src/sitemap.xml`.
-4. Run `pnpm run build` and verify `dist/<slug>/index.html` exists.
+1. **Add metadata** — append an entry to `stories[]` in `content.json` (slug,
+   title, description, `publishedDate`, `gradient`).
+2. **Create the page** — add `src/<slug>/index.html` following the structure of
+   an existing self-contained story (e.g. `src/tentang-syukur/index.html`):
+   a gradient `amp-story-page` background plus text panels for each ayat. Reuse
+   the same `gradient` colors as in `content.json` so the card and story match.
+   (Older stories such as `src/tentang-sabar/index.html` instead pull full-bleed
+   images from `https://www.baca-quran.id/stories-content/<slug>/`; either style
+   is valid.)
+3. **Sync the landing page** — run `pnpm run generate:index` and commit
+   `src/index.html`. This only rewrites the cards between the
+   `<!-- stories:start -->` / `<!-- stories:end -->` markers inside
+   `<ul class="cards">`; the rest of the page (styles, footer, scripts) is a
+   normal hand-edited template. The step is intentionally NOT part of the build,
+   so run it locally whenever `content.json` changes.
+4. **Verify** — run `pnpm run build` (this regenerates `src/sitemap.xml`) and
+   confirm `dist/<slug>/index.html` and the new sitemap entry exist.
+
+> `src/sitemap.xml` is fully generated — don't hand-edit it. In `src/index.html`,
+> only the marked card region is generated; the surrounding template is yours to
+> edit. Card metadata always comes from `content.json`.
 
 ## Conventions
 

@@ -15,7 +15,7 @@
 	<meta property="og:title" content="Web Stories by Baca-Quran.id" />
 	<meta property="og:description" content="Kumpulan Stories yang diambil dari ayat-ayat Al-Quran" />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://www.baca-quran.id/stories/tentang-sabar/" />
+	<meta property="og:url" content="https://www.baca-quran.id/stories/" />
 	<meta property="og:image" content="https://www.baca-quran.id/meta-image.png" />
 
 	<link rel='icon' type='image/png' href='https://www.baca-quran.id/icon-32.png'>
@@ -40,25 +40,8 @@
 			margin: .67em 0
 		}
 
-		hr {
-			box-sizing: content-box;
-			height: 0;
-			overflow: visible
-		}
-
-		pre {
-			font-family: monospace, monospace;
-			font-size: 1em
-		}
-
 		a {
 			background-color: transparent
-		}
-
-		abbr[title] {
-			border-bottom: none;
-			text-decoration: underline;
-			text-decoration: underline dotted
 		}
 
 		b,
@@ -66,140 +49,12 @@
 			font-weight: bolder
 		}
 
-		code,
-		kbd,
-		samp {
-			font-family: monospace, monospace;
-			font-size: 1em
-		}
-
 		small {
 			font-size: 80%
 		}
 
-		sub,
-		sup {
-			font-size: 75%;
-			line-height: 0;
-			position: relative;
-			vertical-align: baseline
-		}
-
-		sub {
-			bottom: -.25em
-		}
-
-		sup {
-			top: -.5em
-		}
-
 		img {
 			border-style: none
-		}
-
-		button,
-		input,
-		optgroup,
-		select,
-		textarea {
-			font-family: inherit;
-			font-size: 100%;
-			line-height: 1.15;
-			margin: 0
-		}
-
-		button,
-		input {
-			overflow: visible
-		}
-
-		button,
-		select {
-			text-transform: none
-		}
-
-		[type=button],
-		[type=reset],
-		[type=submit],
-		button {
-			-webkit-appearance: button
-		}
-
-		[type=button]::-moz-focus-inner,
-		[type=reset]::-moz-focus-inner,
-		[type=submit]::-moz-focus-inner,
-		button::-moz-focus-inner {
-			border-style: none;
-			padding: 0
-		}
-
-		[type=button]:-moz-focusring,
-		[type=reset]:-moz-focusring,
-		[type=submit]:-moz-focusring,
-		button:-moz-focusring {
-			outline: 1px dotted ButtonText
-		}
-
-		fieldset {
-			padding: .35em .75em .625em
-		}
-
-		legend {
-			box-sizing: border-box;
-			color: inherit;
-			display: table;
-			max-width: 100%;
-			padding: 0;
-			white-space: normal
-		}
-
-		progress {
-			vertical-align: baseline
-		}
-
-		textarea {
-			overflow: auto
-		}
-
-		[type=checkbox],
-		[type=radio] {
-			box-sizing: border-box;
-			padding: 0
-		}
-
-		[type=number]::-webkit-inner-spin-button,
-		[type=number]::-webkit-outer-spin-button {
-			height: auto
-		}
-
-		[type=search] {
-			-webkit-appearance: textfield;
-			outline-offset: -2px
-		}
-
-		[type=search]::-webkit-search-decoration {
-			-webkit-appearance: none
-		}
-
-		::-webkit-file-upload-button {
-			-webkit-appearance: button;
-			font: inherit
-		}
-
-		details {
-			display: block
-		}
-
-		summary {
-			display: list-item
-		}
-
-		template {
-			display: none
-		}
-
-		[hidden] {
-			display: none
 		}
 
 		body {
@@ -212,6 +67,7 @@
 			-ms-font-feature-settings: "kern", "liga", "clig", "calt";
 			-webkit-font-feature-settings: "kern", "liga", "clig", "calt";
 			font-feature-settings: "kern", "liga", "clig", "calt";
+			background-color: #fafafa;
 		}
 
 		.wrapper {
@@ -238,31 +94,66 @@
 			min-height: 70vh;
 		}
 
-		article ul {
+		.cards {
 			list-style: none;
 			margin: 0;
 			padding: 0;
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 1.25rem;
 		}
 
-		h3 {
-			font-size: 1.4427rem;
-			margin-bottom: .25em;
+		@media (min-width: 34rem) {
+			.cards {
+				grid-template-columns: 1fr 1fr;
+			}
 		}
 
-		ul li {
-			padding-bottom: 1em;
+		.card {
+			position: relative;
+			overflow: hidden;
+			border-radius: 18px;
+			padding: 1.5rem 1.4rem;
+			color: #fff;
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+			transition: transform .2s ease, box-shadow .2s ease;
 		}
 
-		ul li a {
-			color: #007acc;
+		.card:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+		}
+
+		.card a {
+			color: #fff;
 			text-decoration: none;
 		}
 
+		.card h3 {
+			font-size: 1.4427rem;
+			margin: 0 0 .35em;
+			line-height: 1.25;
+		}
+
+		.card small {
+			display: block;
+			opacity: .9;
+			font-size: .8rem;
+			letter-spacing: .03em;
+		}
+
+		.card p {
+			margin: .6em 0 0;
+			line-height: 1.6;
+			font-size: .95rem;
+			opacity: .96;
+		}
+
 		footer {
-                        padding: .5em 1em;
+			padding: .5em 1em;
 			width: 100%;
 			text-align: center;
-                        font-size: 0.9rem;
+			font-size: 0.9rem;
 		}
 
 		footer a {
@@ -287,28 +178,79 @@
 			<h1 class="title"><a aria-current="page" href="/stories/">Web Stories</a></h1>
 		</header>
 		<article>
-			<ul>
-				<li>
+			<ul class="cards">
+				<!-- stories:start — DO NOT EDIT cards below by hand; they are generated. Edit content.json, then run `pnpm run generate:index`. -->
+				<li class="card" style="background-image: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);">
+					<a href="/stories/tentang-silaturahmi/">
+						<h3>Tentang Silaturahmi</h3>
+					</a>
+					<small>27 Mei 2026</small>
+					<p>Kumpulan quote tentang silaturahmi yang diambil dari ayat-ayat Al-Quran</p>
+				</li>
+				<li class="card" style="background-image: linear-gradient(135deg, #c94b4b 0%, #4b134f 100%);">
+					<a href="/stories/tentang-berbakti-kepada-orang-tua/">
+						<h3>Tentang Berbakti kepada Orang Tua</h3>
+					</a>
+					<small>20 Mei 2026</small>
+					<p>Kumpulan quote tentang berbakti kepada orang tua yang diambil dari ayat-ayat Al-Quran</p>
+				</li>
+				<li class="card" style="background-image: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+					<a href="/stories/tentang-jujur/">
+						<h3>Tentang Jujur</h3>
+					</a>
+					<small>13 Mei 2026</small>
+					<p>Kumpulan quote tentang jujur yang diambil dari ayat-ayat Al-Quran</p>
+				</li>
+				<li class="card" style="background-image: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+					<a href="/stories/tentang-taubat/">
+						<h3>Tentang Taubat</h3>
+					</a>
+					<small>06 Mei 2026</small>
+					<p>Kumpulan quote tentang taubat yang diambil dari ayat-ayat Al-Quran</p>
+				</li>
+				<li class="card" style="background-image: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
+					<a href="/stories/tentang-ikhlas/">
+						<h3>Tentang Ikhlas</h3>
+					</a>
+					<small>29 April 2026</small>
+					<p>Kumpulan quote tentang ikhlas yang diambil dari ayat-ayat Al-Quran</p>
+				</li>
+				<li class="card" style="background-image: linear-gradient(135deg, #0ba360 0%, #3cba92 100%);">
+					<a href="/stories/tentang-tawakal/">
+						<h3>Tentang Tawakal</h3>
+					</a>
+					<small>22 April 2026</small>
+					<p>Kumpulan quote tentang tawakal yang diambil dari ayat-ayat Al-Quran</p>
+				</li>
+				<li class="card" style="background-image: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+					<a href="/stories/tentang-syukur/">
+						<h3>Tentang Syukur</h3>
+					</a>
+					<small>15 April 2026</small>
+					<p>Kumpulan quote tentang syukur yang diambil dari ayat-ayat Al-Quran</p>
+				</li>
+				<li class="card" style="background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
 					<a href="/stories/tentang-menuntut-ilmu/">
 						<h3>Tentang Menuntut Ilmu</h3>
 					</a>
 					<small>12 Juli 2020</small>
 					<p>Kumpulan quote tentang menuntut ilmu yang diambil dari ayat-ayat Al-Quran</p>
 				</li>
-				<li>
+				<li class="card" style="background-image: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);">
 					<a href="/stories/tentang-sedekah/">
 						<h3>Tentang Sedekah</h3>
 					</a>
 					<small>06 Juli 2020</small>
 					<p>Kumpulan quote tentang sedekah yang diambil dari ayat-ayat Al-Quran</p>
 				</li>
-				<li>
+				<li class="card" style="background-image: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
 					<a href="/stories/tentang-sabar/">
 						<h3>Tentang Sabar</h3>
 					</a>
 					<small>02 Juli 2020</small>
 					<p>Kumpulan quote tentang sabar yang diambil dari ayat-ayat Al-Quran</p>
 				</li>
+				<!-- stories:end -->
 			</ul>
 		</article>
 	</main>
@@ -331,7 +273,7 @@
 		<a href="/">Baca-Quran.id</a> © 2020
                 <p>
                   Built with ❤️ by
-		  <a target="_blank" rel="noopener noreferrer" href="https://mazipan.space/">Irfan Maulana</a> 
+		  <a target="_blank" rel="noopener noreferrer" href="https://mazipan.space/">Irfan Maulana</a>
                   <br/>
                   <a href="https://www.baca-quran.id/tulisan/">BacaQuran.id Web Blog</a>
                   <br /><br />

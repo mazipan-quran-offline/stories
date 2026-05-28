@@ -12,10 +12,12 @@
   },
   "scripts": {
     "cleanup": "rimraf dist",
+    "generate:sitemap": "node scripts/generate-sitemap.mjs",
+    "generate:index": "node scripts/generate-index.mjs",
     "copy:index": "copyfiles src/index.html src/sitemap.xml dist -f",
     "copy:files": "copyfiles -u 1 src/**/*.html dist",
     "dev": "NODE_ENV=development parcel src/index.html 'src/**/*.html'",
-    "build": "pnpm run cleanup && pnpm run copy:index && pnpm run copy:files",
+    "build": "pnpm run cleanup && pnpm run generate:sitemap && pnpm run copy:index && pnpm run copy:files",
     "build:parcel": "rimraf dist && parcel build 'src/**/*.html' --public-url https://www.baca-quran.id/stories/",
     "format": "biome format --write .",
     "format:check": "biome format .",
