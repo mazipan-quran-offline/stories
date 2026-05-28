@@ -5,6 +5,9 @@ on:
     branches:
       - master
 
+permissions:
+  contents: write
+
 jobs:
   deploy_gh_pages:
     runs-on: ubuntu-latest
@@ -13,7 +16,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
-          persist-credentials: false
           fetch-depth: 0
 
       - name: Install pnpm
@@ -37,5 +39,6 @@ jobs:
       - name: GitHub Pages Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
-          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          publish_branch: gh-pages
