@@ -50,7 +50,7 @@ scripts/
   generate-index.mjs      # regenerates src/index.html (on-demand, NOT in build)
   generate-sitemap.mjs    # regenerates src/sitemap.xml (runs during build)
 src/
-  index.html              # landing page — GENERATED from content.json, do not hand-edit
+  index.html              # landing page template; only the card region is injected from content.json
   sitemap.xml             # GENERATED from content.json, do not hand-edit
   <story-slug>/index.html # individual web story (hand-written)
 .github/workflows/deploy.yml  # GH Pages deploy
@@ -85,14 +85,18 @@ The landing page renders cards newest-first; pick `publishedDate` accordingly
    (Older stories such as `src/tentang-sabar/index.html` instead pull full-bleed
    images from `https://www.baca-quran.id/stories-content/<slug>/`; either style
    is valid.)
-3. **Sync the landing page** — run `pnpm run generate:index` and commit the
-   regenerated `src/index.html`. This step is intentionally NOT part of the
-   build, so run it locally whenever `content.json` changes.
+3. **Sync the landing page** — run `pnpm run generate:index` and commit
+   `src/index.html`. This only rewrites the cards between the
+   `<!-- stories:start -->` / `<!-- stories:end -->` markers inside
+   `<ul class="cards">`; the rest of the page (styles, footer, scripts) is a
+   normal hand-edited template. The step is intentionally NOT part of the build,
+   so run it locally whenever `content.json` changes.
 4. **Verify** — run `pnpm run build` (this regenerates `src/sitemap.xml`) and
    confirm `dist/<slug>/index.html` and the new sitemap entry exist.
 
-> Do not hand-edit `src/index.html` or `src/sitemap.xml` — they are generated.
-> Edit `content.json` and rerun the generators instead.
+> `src/sitemap.xml` is fully generated — don't hand-edit it. In `src/index.html`,
+> only the marked card region is generated; the surrounding template is yours to
+> edit. Card metadata always comes from `content.json`.
 
 ## Conventions
 
