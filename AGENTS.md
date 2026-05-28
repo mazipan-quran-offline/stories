@@ -101,6 +101,10 @@ scrim, so any vibrant hypercolor preset keeps white text readable.
      (`https://www.baca-quran.id/surah/<surahNumber>/<ayatNumber>/`).
    - Load `amp-fit-text` via
      `<script async custom-element="amp-fit-text" src="https://cdn.ampproject.org/v0/amp-fit-text-0.1.js"></script>`.
+   - Give it a **cursive content font** and a **themed entrance animation** —
+     these are required parts of the house style, see
+     [Typography](#typography--cursive-is-the-contents-signature-look) and
+     [Motion](#motion--themed-entrance-animations) below.
 
    (Older stories such as `src/tentang-sabar/index.html` instead pull full-bleed
    images from `https://www.baca-quran.id/stories-content/<slug>/`; either style
@@ -123,6 +127,79 @@ and pick the cap by character length:
 
 So a one-line verse can fill the panel at ~46px while a long verse settles
 smaller — each page is sized to its own content, not a single fixed value.
+
+### Typography — cursive is the content's signature look
+
+The verse content is meant to feel **cursive/handwritten** — that is the
+deliberate house style, carried over from the original 2020 stories (which
+used Pacifico + Merienda One). Do **not** ship a gradient story with a plain
+serif/sans body; that reads as a regression. Rules:
+
+- **Load fonts per page.** Each story loads only its own fonts via an
+  AMP-valid stylesheet `<link>` in `<head>`, placed right after the
+  `<link rel="canonical">` (with `preconnect` hints to
+  `fonts.googleapis.com` / `fonts.gstatic.com`). Google Fonts is an
+  AMP-allowed font provider, so this passes the validator.
+- **One pairing per theme:** a *decorative* script for `.cover-title` plus a
+  **readable** handwriting/script for `.quote` (the verse body). Set
+  `font-family: '<Font>', cursive;` on both.
+- **Body readability is non-negotiable.** Verses can be long and sit on a
+  dark scrim, so the `.quote` face must stay legible at paragraph length —
+  use readable scripts (Merienda, Caveat, Courgette, Kalam). Reserve the
+  ornamental faces (Pacifico, Great Vibes, Sacramento, Parisienne, Lobster,
+  Kaushan Script, Satisfy) for the short `.cover-title` only. Give `.quote`
+  a little more room — `line-height: ~1.6` and `font-weight: 500–600`;
+  `.cover-title` reads best at `font-weight: 400`.
+- **Default pairing:** Pacifico (title) + Merienda (body). Use it unless the
+  theme clearly calls for its own character.
+- **Keep UI labels clean.** Don't put the cursive face on `.kicker`, `.ref`,
+  or `.brand` — those small labels stay in the system fallback for legibility.
+
+Current per-theme pairings (cover title / verse body):
+
+| Story | Cover title | Verse body |
+| --- | --- | --- |
+| tentang-syukur | Pacifico | Merienda |
+| tentang-tawakal | Satisfy | Caveat |
+| tentang-ikhlas | Great Vibes | Courgette |
+| tentang-taubat | Parisienne | Kalam |
+| tentang-jujur | Kaushan Script | Caveat |
+| tentang-berbakti-kepada-orang-tua | Sacramento | Courgette |
+| tentang-silaturahmi | Lobster | Merienda |
+
+### Motion — themed entrance animations
+
+AMP web stories animate elements **in** (`animate-in`) as a page becomes
+active; the page swipe itself is the "exit" — there is **no per-element exit
+animation**, so don't promise one. Give each story a small motion identity:
+
+- **Signature entrance + tempo + easing.** Pick an `animate-in` preset that
+  matches the theme's mood and tune `animate-in-duration` /
+  `animate-in-timing-function` to set the tempo — calm themes (tawakal)
+  breathe slower (~1.2s, `ease-in-out`); direct themes (jujur) snap in
+  (~0.6s, `ease-out`).
+- **Stagger the cover.** Animate the cover's three children (kicker → title →
+  subtitle) with increasing `animate-in-delay` for a layered reveal — animate
+  the children, not the wrapping `.panel`.
+- **Alternate verse panels.** Use two complementary entrances (A/B) across
+  consecutive verse pages so they don't all move identically.
+- **Valid presets** (the validator rejects unknown names): `fade-in`,
+  `fly-in-{top,bottom,left,right}`, `pan-{up,down,left,right}`, `zoom-in`,
+  `zoom-out`, `rotate-in-{left,right}`, `twirl-in`, `whoosh-in-{left,right}`,
+  `drop`, `pulse`.
+
+Current per-theme motion (cover / verse A / verse B, tempo):
+
+| Story | Cover | Verse A / B | Tempo |
+| --- | --- | --- | --- |
+| tentang-syukur | zoom-in | fly-in-bottom / zoom-in | 0.8s ease-out |
+| tentang-tawakal | fade-in | pan-up / fade-in | 1.2s ease-in-out |
+| tentang-ikhlas | twirl-in | rotate-in-left / rotate-in-right | 1s ease-out |
+| tentang-taubat | fly-in-bottom | fly-in-bottom / fade-in | 1s ease-in-out |
+| tentang-jujur | whoosh-in-right | whoosh-in-left / whoosh-in-right | 0.6s ease-out |
+| tentang-berbakti-kepada-orang-tua | drop | fly-in-bottom / drop | 0.9s ease-out |
+| tentang-silaturahmi | fly-in-left | fly-in-left / fly-in-right | 0.9s ease-out |
+
 3. **Sync the landing page** — run `pnpm run generate:index` and commit
    `src/index.html`. This only rewrites the cards between the
    `<!-- stories:start -->` / `<!-- stories:end -->` markers inside
