@@ -10,7 +10,7 @@ for local development and the optional `build:parcel` pipeline.
 
 ## Toolchain
 
-- **Node**: version pinned in `.nvmrc` (Node 22 LTS). Use `nvm use` (or
+- **Node**: version pinned in `.nvmrc` (Node 24 LTS). Use `nvm use` (or
   `fnm use`) before running anything.
 - **Package manager**: pnpm via Corepack. `packageManager` and `engines` in
   `package.json` are the source of truth — do not switch to npm/yarn.
