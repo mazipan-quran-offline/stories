@@ -19,6 +19,10 @@ import { formatDateID, loadStories, REPO_ROOT } from './content.mjs';
 
 const START = '<!-- stories:start';
 const END = '<!-- stories:end -->';
+// Canonical start marker — re-asserted on every run so the "do not edit"
+// warning can't be weakened or lost by a manual edit.
+const START_MARKER =
+  '<!-- stories:start — DO NOT EDIT cards below by hand; they are generated. Edit content.json, then run `pnpm run generate:index`. -->';
 
 function escapeHtml(value) {
   return value
@@ -52,11 +56,13 @@ if (startIdx === -1 || endIdx === -1) {
   );
 }
 
-// Keep the start marker line and the end marker line; discard everything in
-// between (any manual edits) and re-emit the cards from content.json.
-const startLineEnd = html.indexOf('\n', startIdx) + 1;
+// Re-assert the canonical start marker (preserving its indentation), discard
+// everything between the markers (any manual edits), and re-emit the cards from
+// content.json. The end marker line is kept as-is.
+const lineStart = html.lastIndexOf('\n', startIdx) + 1;
+const indent = html.slice(lineStart, startIdx);
 const cards = loadStories().map(renderCard).join('\n');
-const updated = `${html.slice(0, startLineEnd)}${cards}\n\t\t\t\t${html.slice(endIdx)}`;
+const updated = `${html.slice(0, lineStart)}${indent}${START_MARKER}\n${cards}\n${indent}${html.slice(endIdx)}`;
 
 writeFileSync(indexPath, updated);
 console.log(`Synced story cards in ${indexPath}`);
