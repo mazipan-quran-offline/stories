@@ -10,8 +10,11 @@ for local development and the optional `build:parcel` pipeline.
 
 ## Toolchain
 
-- **Node**: version pinned in `.nvmrc` (Node 24 LTS). Use `nvm use` (or
-  `fnm use`) before running anything.
+- **Node**: version pinned via `engines.node` in `package.json` (Node 24
+  LTS, `^24.16.0`). CI reads it through `setup-node`'s
+  `node-version-file: package.json`. Locally, run e.g. `nvm install $(node
+  -p "require('./package.json').engines.node")` or just match the engines
+  range.
 - **Package manager**: pnpm via Corepack. `packageManager` and `engines` in
   `package.json` are the source of truth — do not switch to npm/yarn.
   Bootstrap with:
