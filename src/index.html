@@ -4,6 +4,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+	<meta name="theme-color" content="#0b0d17" media="(prefers-color-scheme: dark)">
+	<meta name="theme-color" content="#f5f6fb" media="(prefers-color-scheme: light)">
 	<title>Web Stories by Baca-Quran.id</title>
 
 	<meta itemprop="name" content="Web Stories by Baca-Quran.id">
@@ -20,273 +22,902 @@
 
 	<link rel='icon' type='image/png' href='https://www.baca-quran.id/icon-32.png'>
 
-	<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+	<!-- Set the theme before paint to avoid a flash of the wrong theme. -->
+	<script>
+		(function () {
+			try {
+				var stored = localStorage.getItem('theme');
+				var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				var theme = stored || (prefersDark ? 'dark' : 'light');
+				document.documentElement.setAttribute('data-theme', theme);
+			} catch (e) {
+				document.documentElement.setAttribute('data-theme', 'light');
+			}
+		})();
+	</script>
+
 	<style>
+		:root {
+			--font-display: 'Merriweather', Georgia, serif;
+			--font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+			--maxw: 64rem;
+			--radius: 20px;
+			--radius-sm: 14px;
+			--ease: cubic-bezier(0.22, 1, 0.36, 1);
+		}
+
+		/* ---------- Light theme (default) ---------- */
+		:root,
+		[data-theme="light"] {
+			--bg: #f5f6fb;
+			--bg-2: #eceeffb3;
+			--surface: rgba(255, 255, 255, 0.72);
+			--surface-solid: #ffffff;
+			--text: #14162b;
+			--text-strong: #0b0d1c;
+			--muted: #5a5d72;
+			--border: rgba(20, 22, 43, 0.10);
+			--border-strong: rgba(20, 22, 43, 0.16);
+			--shadow: 0 18px 40px -20px rgba(20, 22, 43, 0.35);
+			--shadow-hover: 0 30px 60px -24px rgba(20, 22, 43, 0.45);
+			--accent: #4f46e5;
+			--accent-text: #ffffff;
+			--orb-1: rgba(99, 102, 241, 0.55);
+			--orb-2: rgba(236, 72, 153, 0.40);
+			--orb-3: rgba(20, 184, 166, 0.40);
+			--orb-4: rgba(251, 191, 36, 0.38);
+			--orb-opacity: 0.7;
+			--nav-bg: rgba(245, 246, 251, 0.7);
+		}
+
+		/* ---------- Dark theme ---------- */
+		[data-theme="dark"] {
+			--bg: #080a14;
+			--bg-2: #0d1020;
+			--surface: rgba(22, 26, 46, 0.55);
+			--surface-solid: #14172a;
+			--text: #e7e9f5;
+			--text-strong: #ffffff;
+			--muted: #9ca0bd;
+			--border: rgba(255, 255, 255, 0.09);
+			--border-strong: rgba(255, 255, 255, 0.16);
+			--shadow: 0 24px 50px -22px rgba(0, 0, 0, 0.8);
+			--shadow-hover: 0 34px 70px -24px rgba(0, 0, 0, 0.9);
+			--accent: #818cf8;
+			--accent-text: #0b0d1c;
+			--orb-1: rgba(99, 102, 241, 0.55);
+			--orb-2: rgba(217, 70, 239, 0.45);
+			--orb-3: rgba(14, 165, 233, 0.45);
+			--orb-4: rgba(244, 114, 182, 0.40);
+			--orb-opacity: 0.85;
+			--nav-bg: rgba(8, 10, 20, 0.6);
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
 		html {
-			line-height: 1.15;
-			-webkit-text-size-adjust: 100%
+			-webkit-text-size-adjust: 100%;
+			scroll-behavior: smooth;
 		}
 
 		body {
-			margin: 0
-		}
-
-		main {
-			display: block
-		}
-
-		h1 {
-			font-size: 2em;
-			margin: .67em 0
+			margin: 0;
+			min-height: 100vh;
+			color: var(--text);
+			background-color: var(--bg);
+			font-family: var(--font-sans);
+			font-weight: 400;
+			line-height: 1.6;
+			word-wrap: break-word;
+			font-feature-settings: "kern", "liga", "clig", "calt";
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			transition: background-color .4s var(--ease), color .4s var(--ease);
 		}
 
 		a {
-			background-color: transparent
+			color: inherit;
 		}
 
-		b,
-		strong {
-			font-weight: bolder
+		/* ---------- Background gradient orbs ---------- */
+		.bg-orbs {
+			position: fixed;
+			inset: 0;
+			z-index: -1;
+			overflow: hidden;
+			pointer-events: none;
+			opacity: var(--orb-opacity);
+			transition: opacity .5s var(--ease);
 		}
 
-		small {
-			font-size: 80%
+		.bg-orbs::after {
+			/* subtle grain/vignette to keep the blur from looking flat */
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: radial-gradient(120% 80% at 50% -10%, transparent 40%, var(--bg) 100%);
 		}
 
-		img {
-			border-style: none
+		.orb {
+			position: absolute;
+			border-radius: 50%;
+			filter: blur(80px);
+			will-change: transform;
 		}
 
-		body {
-			color: hsla(0, 0%, 0%, 0.9);
-			font-family: 'Merriweather', serif;
-			font-weight: 400;
-			word-wrap: break-word;
-			font-kerning: normal;
-			-moz-font-feature-settings: "kern", "liga", "clig", "calt";
-			-ms-font-feature-settings: "kern", "liga", "clig", "calt";
-			-webkit-font-feature-settings: "kern", "liga", "clig", "calt";
-			font-feature-settings: "kern", "liga", "clig", "calt";
-			background-color: #fafafa;
+		.orb-1 {
+			width: 46vw;
+			height: 46vw;
+			top: -8vw;
+			left: -6vw;
+			background: radial-gradient(circle at 30% 30%, var(--orb-1), transparent 70%);
+			animation: drift1 22s var(--ease) infinite alternate;
 		}
 
+		.orb-2 {
+			width: 40vw;
+			height: 40vw;
+			top: 4vw;
+			right: -10vw;
+			background: radial-gradient(circle at 60% 40%, var(--orb-2), transparent 70%);
+			animation: drift2 26s var(--ease) infinite alternate;
+		}
+
+		.orb-3 {
+			width: 38vw;
+			height: 38vw;
+			bottom: -12vw;
+			left: 8vw;
+			background: radial-gradient(circle at 40% 60%, var(--orb-3), transparent 70%);
+			animation: drift3 30s var(--ease) infinite alternate;
+		}
+
+		.orb-4 {
+			width: 30vw;
+			height: 30vw;
+			bottom: 2vw;
+			right: 4vw;
+			background: radial-gradient(circle at 50% 50%, var(--orb-4), transparent 70%);
+			animation: drift1 28s var(--ease) infinite alternate-reverse;
+		}
+
+		@keyframes drift1 {
+			from { transform: translate3d(0, 0, 0) scale(1); }
+			to { transform: translate3d(4vw, 6vw, 0) scale(1.12); }
+		}
+
+		@keyframes drift2 {
+			from { transform: translate3d(0, 0, 0) scale(1.05); }
+			to { transform: translate3d(-5vw, 5vw, 0) scale(0.95); }
+		}
+
+		@keyframes drift3 {
+			from { transform: translate3d(0, 0, 0) scale(1); }
+			to { transform: translate3d(6vw, -4vw, 0) scale(1.1); }
+		}
+
+		/* ---------- Layout ---------- */
 		.wrapper {
-			margin-left: auto;
-			margin-right: auto;
-			max-width: 42rem;
-			padding: 2.625rem 1.3125rem;
+			width: 100%;
+			max-width: var(--maxw);
+			margin: 0 auto;
+			padding: 0 1.5rem;
 		}
 
-		.title {
-			font-size: 3.95285rem;
-			line-height: 4.375rem;
-			margin-bottom: 2.625rem;
-			margin-top: 0;
+		/* ---------- Top navigation ---------- */
+		.nav {
+			position: sticky;
+			top: 0;
+			z-index: 20;
+			backdrop-filter: saturate(160%) blur(14px);
+			-webkit-backdrop-filter: saturate(160%) blur(14px);
+			background: var(--nav-bg);
+			border-bottom: 1px solid var(--border);
+		}
+
+		.nav-inner {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1rem;
+			padding-top: .9rem;
+			padding-bottom: .9rem;
+		}
+
+		.brand {
+			display: inline-flex;
+			align-items: center;
+			gap: .6rem;
 			font-weight: 700;
-		}
-
-		.title a {
+			font-size: 1.05rem;
 			text-decoration: none;
-			color: #333;
+			color: var(--text-strong);
+			letter-spacing: -0.01em;
 		}
 
-		article {
-			min-height: 70vh;
+		.brand-mark {
+			display: grid;
+			place-items: center;
+			width: 34px;
+			height: 34px;
+			border-radius: 10px;
+			color: #fff;
+			background-image: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+			box-shadow: 0 6px 16px -4px rgba(99, 102, 241, 0.6);
+			font-size: 1rem;
 		}
 
+		/* ---------- Theme toggle ---------- */
+		.theme-toggle {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 42px;
+			height: 42px;
+			border-radius: 12px;
+			border: 1px solid var(--border-strong);
+			background: var(--surface);
+			color: var(--text);
+			cursor: pointer;
+			transition: transform .2s var(--ease), border-color .2s var(--ease), background .3s var(--ease);
+		}
+
+		.theme-toggle:hover {
+			transform: translateY(-2px);
+			border-color: var(--accent);
+		}
+
+		.theme-toggle:focus-visible {
+			outline: 2px solid var(--accent);
+			outline-offset: 2px;
+		}
+
+		.theme-toggle svg {
+			width: 20px;
+			height: 20px;
+		}
+
+		.theme-toggle .icon-sun { display: none; }
+		.theme-toggle .icon-moon { display: block; }
+		[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+		[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+		/* ---------- Hero ---------- */
+		.hero {
+			text-align: center;
+			padding: clamp(3.5rem, 9vw, 6.5rem) 0 clamp(2.5rem, 6vw, 4rem);
+		}
+
+		.eyebrow {
+			display: inline-flex;
+			align-items: center;
+			gap: .5rem;
+			padding: .4rem .9rem;
+			border-radius: 999px;
+			border: 1px solid var(--border-strong);
+			background: var(--surface);
+			color: var(--muted);
+			font-size: .78rem;
+			font-weight: 600;
+			letter-spacing: .06em;
+			text-transform: uppercase;
+			margin-bottom: 1.4rem;
+			backdrop-filter: blur(8px);
+			-webkit-backdrop-filter: blur(8px);
+		}
+
+		.eyebrow .dot {
+			width: 7px;
+			height: 7px;
+			border-radius: 50%;
+			background: #22c55e;
+			box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.18);
+		}
+
+		.hero h1 {
+			font-family: var(--font-display);
+			font-weight: 900;
+			font-size: clamp(2.4rem, 6vw, 4.25rem);
+			line-height: 1.05;
+			letter-spacing: -0.02em;
+			margin: 0 0 1.1rem;
+			color: var(--text-strong);
+		}
+
+		.hero h1 .grad {
+			background-image: linear-gradient(120deg, #6366f1 0%, #a855f7 45%, #ec4899 100%);
+			-webkit-background-clip: text;
+			background-clip: text;
+			-webkit-text-fill-color: transparent;
+			color: transparent;
+		}
+
+		.hero p {
+			max-width: 38rem;
+			margin: 0 auto 2rem;
+			font-size: clamp(1rem, 2.2vw, 1.18rem);
+			color: var(--muted);
+		}
+
+		.hero-actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: .8rem;
+			justify-content: center;
+		}
+
+		.btn {
+			display: inline-flex;
+			align-items: center;
+			gap: .5rem;
+			padding: .8rem 1.4rem;
+			border-radius: 12px;
+			font-weight: 600;
+			font-size: .95rem;
+			text-decoration: none;
+			cursor: pointer;
+			border: 1px solid transparent;
+			transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
+		}
+
+		.btn-primary {
+			color: var(--accent-text);
+			background-image: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+			box-shadow: 0 14px 30px -10px rgba(124, 58, 237, 0.6);
+		}
+
+		.btn-primary:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 20px 40px -12px rgba(124, 58, 237, 0.7);
+		}
+
+		.btn-ghost {
+			color: var(--text);
+			background: var(--surface);
+			border-color: var(--border-strong);
+			backdrop-filter: blur(8px);
+			-webkit-backdrop-filter: blur(8px);
+		}
+
+		.btn-ghost:hover {
+			transform: translateY(-2px);
+			border-color: var(--accent);
+		}
+
+		/* ---------- Section heading ---------- */
+		.section-head {
+			display: flex;
+			align-items: flex-end;
+			justify-content: space-between;
+			gap: 1rem;
+			margin: 1rem 0 1.6rem;
+		}
+
+		.section-head h2 {
+			font-family: var(--font-display);
+			font-weight: 700;
+			font-size: clamp(1.5rem, 3.4vw, 2rem);
+			letter-spacing: -0.01em;
+			margin: 0;
+			color: var(--text-strong);
+		}
+
+		.section-head .count {
+			font-size: .85rem;
+			color: var(--muted);
+			font-weight: 600;
+			white-space: nowrap;
+		}
+
+		/* ---------- Cards ---------- */
 		.cards {
 			list-style: none;
 			margin: 0;
-			padding: 0;
+			padding: 0 0 1rem;
 			display: grid;
 			grid-template-columns: 1fr;
-			gap: 1.25rem;
+			gap: 1.4rem;
 		}
 
-		@media (min-width: 34rem) {
-			.cards {
-				grid-template-columns: 1fr 1fr;
-			}
+		@media (min-width: 36rem) {
+			.cards { grid-template-columns: repeat(2, 1fr); }
+		}
+
+		@media (min-width: 56rem) {
+			.cards { grid-template-columns: repeat(3, 1fr); }
 		}
 
 		.card {
 			position: relative;
+			border-radius: var(--radius);
+			background: var(--surface);
+			border: 1px solid var(--border);
+			box-shadow: var(--shadow);
 			overflow: hidden;
-			border-radius: 18px;
-			padding: 1.5rem 1.4rem;
-			color: #fff;
-			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-			transition: transform .2s ease, box-shadow .2s ease;
+			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px);
+			transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
 		}
 
 		.card:hover {
-			transform: translateY(-4px);
-			box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+			transform: translateY(-6px);
+			box-shadow: var(--shadow-hover);
+			border-color: var(--border-strong);
 		}
 
-		.card a {
-			color: #fff;
+		.card-link {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
 			text-decoration: none;
+			color: inherit;
 		}
 
-		.card h3 {
-			font-size: 1.4427rem;
-			margin: 0 0 .35em;
-			line-height: 1.25;
+		.card-cover {
+			position: relative;
+			height: 116px;
+			background-size: cover;
+			background-position: center;
 		}
 
-		.card small {
-			display: block;
-			opacity: .9;
-			font-size: .8rem;
-			letter-spacing: .03em;
+		.card-cover::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.18) 100%);
 		}
 
-		.card p {
-			margin: .6em 0 0;
+		.card-cover .badge {
+			position: absolute;
+			left: 1rem;
+			bottom: -16px;
+			width: 44px;
+			height: 44px;
+			display: grid;
+			place-items: center;
+			border-radius: 13px;
+			background: var(--surface-solid);
+			box-shadow: var(--shadow);
+			z-index: 1;
+		}
+
+		.card-cover .badge svg {
+			width: 22px;
+			height: 22px;
+			color: var(--accent);
+		}
+
+		.card-content {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			padding: 1.7rem 1.35rem 1.35rem;
+		}
+
+		.card-date {
+			font-size: .76rem;
+			font-weight: 600;
+			letter-spacing: .04em;
+			text-transform: uppercase;
+			color: var(--muted);
+		}
+
+		.card-title {
+			font-family: var(--font-display);
+			font-size: 1.22rem;
+			font-weight: 700;
+			line-height: 1.3;
+			margin: .35rem 0 .5rem;
+			color: var(--text-strong);
+		}
+
+		.card-desc {
+			margin: 0;
+			font-size: .92rem;
 			line-height: 1.6;
-			font-size: .95rem;
-			opacity: .96;
+			color: var(--muted);
+			flex: 1;
 		}
 
+		.card-cta {
+			display: inline-flex;
+			align-items: center;
+			gap: .4rem;
+			margin-top: 1.1rem;
+			font-size: .88rem;
+			font-weight: 600;
+			color: var(--accent);
+		}
+
+		.card-cta svg {
+			width: 16px;
+			height: 16px;
+			transition: transform .25s var(--ease);
+		}
+
+		.card:hover .card-cta svg {
+			transform: translateX(4px);
+		}
+
+		/* ---------- Ads ---------- */
+		.adswrapper {
+			max-width: var(--maxw);
+			margin: 2.5rem auto 0;
+			padding: 0 1.5rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		/* ---------- Footer ---------- */
 		footer {
-			padding: .5em 1em;
-			width: 100%;
-			text-align: center;
-			font-size: 0.9rem;
+			margin-top: 3.5rem;
+			border-top: 1px solid var(--border);
+			background: var(--surface);
+			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px);
 		}
 
-		footer a {
-			color: #007acc;
+		.footer-inner {
+			max-width: var(--maxw);
+			margin: 0 auto;
+			padding: 2.8rem 1.5rem 1.5rem;
+			display: grid;
+			gap: 2rem;
+			grid-template-columns: 1fr;
+		}
+
+		@media (min-width: 44rem) {
+			.footer-inner {
+				grid-template-columns: 1.5fr 1fr 1fr;
+				gap: 2.5rem;
+			}
+		}
+
+		.footer-brand .brand {
+			margin-bottom: .8rem;
+		}
+
+		.footer-brand p {
+			margin: 0;
+			max-width: 24rem;
+			color: var(--muted);
+			font-size: .92rem;
+		}
+
+		.footer-col h4 {
+			margin: 0 0 .9rem;
+			font-size: .78rem;
+			letter-spacing: .08em;
+			text-transform: uppercase;
+			color: var(--muted);
+			font-weight: 700;
+		}
+
+		.footer-col ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+			gap: .6rem;
+		}
+
+		.footer-col a {
 			text-decoration: none;
+			color: var(--text);
+			font-size: .92rem;
+			font-weight: 500;
+			transition: color .2s var(--ease);
+		}
+
+		.footer-col a:hover {
+			color: var(--accent);
+		}
+
+		.footer-bottom {
+			max-width: var(--maxw);
+			margin: 0 auto;
+			padding: 1.2rem 1.5rem 2rem;
+			border-top: 1px solid var(--border);
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: space-between;
+			gap: .6rem;
+			color: var(--muted);
+			font-size: .85rem;
+		}
+
+		.footer-bottom .heart {
+			color: #ec4899;
+		}
+
+		.footer-bottom a {
+			color: var(--text);
+			font-weight: 600;
+			text-decoration: none;
+		}
+
+		.footer-bottom a:hover {
+			color: var(--accent);
+		}
+
+		/* ---------- Motion preferences ---------- */
+		@media (prefers-reduced-motion: reduce) {
+			* {
+				animation: none !important;
+				transition: none !important;
+				scroll-behavior: auto !important;
+			}
 		}
 	</style>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-25065548-8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-25065548-8"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
 
-  gtag('config', 'UA-25065548-8');
-</script>
+		gtag('config', 'UA-25065548-8');
+	</script>
 </head>
 
 <body>
-	<main class="wrapper">
-		<header>
-			<h1 class="title"><a aria-current="page" href="/stories/">Web Stories</a></h1>
-		</header>
-		<article>
+	<!-- Scattered, blurred gradient lighting in the background -->
+	<div class="bg-orbs" aria-hidden="true">
+		<span class="orb orb-1"></span>
+		<span class="orb orb-2"></span>
+		<span class="orb orb-3"></span>
+		<span class="orb orb-4"></span>
+	</div>
+
+	<nav class="nav">
+		<div class="wrapper nav-inner">
+			<a class="brand" href="/stories/">
+				<span class="brand-mark" aria-hidden="true">۞</span>
+				<span>Web Stories</span>
+			</a>
+			<button class="theme-toggle" type="button" id="themeToggle" aria-label="Ganti tema terang/gelap" title="Ganti tema">
+				<svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+				</svg>
+				<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<circle cx="12" cy="12" r="4"></circle>
+					<path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+				</svg>
+			</button>
+		</div>
+	</nav>
+
+	<main>
+		<section class="wrapper hero">
+			<span class="eyebrow"><span class="dot"></span> Baca-Quran.id</span>
+			<h1>Renungan singkat dari <span class="grad">ayat-ayat Al-Quran</span></h1>
+			<p>Kumpulan web stories yang merangkai quote dan ayat pilihan ke dalam cerita visual yang ringkas, indah, dan mudah dibaca di mana saja.</p>
+			<div class="hero-actions">
+				<a class="btn btn-primary" href="#stories">
+					Jelajahi cerita
+					<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+				</a>
+				<a class="btn btn-ghost" href="https://www.baca-quran.id/" target="_blank" rel="noopener noreferrer">Kunjungi Baca-Quran.id</a>
+			</div>
+		</section>
+
+		<section class="wrapper" id="stories">
+			<div class="section-head">
+				<h2>Semua Cerita</h2>
+				<span class="count" id="storyCount"></span>
+			</div>
 			<ul class="cards">
 				<!-- stories:start — DO NOT EDIT cards below by hand; they are generated. Edit content.json, then run `pnpm run generate:index`. -->
-				<li class="card" style="background-image: linear-gradient(135deg, #22d3ee 0%, #0ea5e9 50%, #2563eb 100%);">
-					<a href="/stories/tentang-silaturahmi/">
-						<h3>Tentang Silaturahmi</h3>
+				<li class="card">
+					<a class="card-link" href="/stories/tentang-silaturahmi/">
+						<span class="card-cover" style="background-image: linear-gradient(135deg, #22d3ee 0%, #0ea5e9 50%, #2563eb 100%);" aria-hidden="true">
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+						</span>
+						<span class="card-content">
+							<time class="card-date">27 Mei 2026</time>
+							<h3 class="card-title">Tentang Silaturahmi</h3>
+							<p class="card-desc">Kumpulan quote tentang silaturahmi yang diambil dari ayat-ayat Al-Quran</p>
+							<span class="card-cta">Baca cerita <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+						</span>
 					</a>
-					<small>27 Mei 2026</small>
-					<p>Kumpulan quote tentang silaturahmi yang diambil dari ayat-ayat Al-Quran</p>
 				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #fb7185 0%, #d946ef 50%, #6366f1 100%);">
-					<a href="/stories/tentang-berbakti-kepada-orang-tua/">
-						<h3>Tentang Berbakti kepada Orang Tua</h3>
+				<li class="card">
+					<a class="card-link" href="/stories/tentang-berbakti-kepada-orang-tua/">
+						<span class="card-cover" style="background-image: linear-gradient(135deg, #fb7185 0%, #d946ef 50%, #6366f1 100%);" aria-hidden="true">
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+						</span>
+						<span class="card-content">
+							<time class="card-date">20 Mei 2026</time>
+							<h3 class="card-title">Tentang Berbakti kepada Orang Tua</h3>
+							<p class="card-desc">Kumpulan quote tentang berbakti kepada orang tua yang diambil dari ayat-ayat Al-Quran</p>
+							<span class="card-cta">Baca cerita <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+						</span>
 					</a>
-					<small>20 Mei 2026</small>
-					<p>Kumpulan quote tentang berbakti kepada orang tua yang diambil dari ayat-ayat Al-Quran</p>
 				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #84cc16 0%, #22c55e 50%, #059669 100%);">
-					<a href="/stories/tentang-jujur/">
-						<h3>Tentang Jujur</h3>
+				<li class="card">
+					<a class="card-link" href="/stories/tentang-jujur/">
+						<span class="card-cover" style="background-image: linear-gradient(135deg, #84cc16 0%, #22c55e 50%, #059669 100%);" aria-hidden="true">
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+						</span>
+						<span class="card-content">
+							<time class="card-date">13 Mei 2026</time>
+							<h3 class="card-title">Tentang Jujur</h3>
+							<p class="card-desc">Kumpulan quote tentang jujur yang diambil dari ayat-ayat Al-Quran</p>
+							<span class="card-cta">Baca cerita <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+						</span>
 					</a>
-					<small>13 Mei 2026</small>
-					<p>Kumpulan quote tentang jujur yang diambil dari ayat-ayat Al-Quran</p>
 				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #1d4ed8 0%, #4338ca 50%, #6b21a8 100%);">
-					<a href="/stories/tentang-taubat/">
-						<h3>Tentang Taubat</h3>
+				<li class="card">
+					<a class="card-link" href="/stories/tentang-taubat/">
+						<span class="card-cover" style="background-image: linear-gradient(135deg, #1d4ed8 0%, #4338ca 50%, #6b21a8 100%);" aria-hidden="true">
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+						</span>
+						<span class="card-content">
+							<time class="card-date">06 Mei 2026</time>
+							<h3 class="card-title">Tentang Taubat</h3>
+							<p class="card-desc">Kumpulan quote tentang taubat yang diambil dari ayat-ayat Al-Quran</p>
+							<span class="card-cta">Baca cerita <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+						</span>
 					</a>
-					<small>06 Mei 2026</small>
-					<p>Kumpulan quote tentang taubat yang diambil dari ayat-ayat Al-Quran</p>
 				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #a855f7 0%, #8b5cf6 50%, #4f46e5 100%);">
-					<a href="/stories/tentang-ikhlas/">
-						<h3>Tentang Ikhlas</h3>
+				<li class="card">
+					<a class="card-link" href="/stories/tentang-ikhlas/">
+						<span class="card-cover" style="background-image: linear-gradient(135deg, #a855f7 0%, #8b5cf6 50%, #4f46e5 100%);" aria-hidden="true">
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+						</span>
+						<span class="card-content">
+							<time class="card-date">29 April 2026</time>
+							<h3 class="card-title">Tentang Ikhlas</h3>
+							<p class="card-desc">Kumpulan quote tentang ikhlas yang diambil dari ayat-ayat Al-Quran</p>
+							<span class="card-cta">Baca cerita <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+						</span>
 					</a>
-					<small>29 April 2026</small>
-					<p>Kumpulan quote tentang ikhlas yang diambil dari ayat-ayat Al-Quran</p>
 				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #10b981 0%, #14b8a6 50%, #06b6d4 100%);">
-					<a href="/stories/tentang-tawakal/">
-						<h3>Tentang Tawakal</h3>
+				<li class="card">
+					<a class="card-link" href="/stories/tentang-tawakal/">
+						<span class="card-cover" style="background-image: linear-gradient(135deg, #10b981 0%, #14b8a6 50%, #06b6d4 100%);" aria-hidden="true">
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+						</span>
+						<span class="card-content">
+							<time class="card-date">22 April 2026</time>
+							<h3 class="card-title">Tentang Tawakal</h3>
+							<p class="card-desc">Kumpulan quote tentang tawakal yang diambil dari ayat-ayat Al-Quran</p>
+							<span class="card-cta">Baca cerita <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+						</span>
 					</a>
-					<small>22 April 2026</small>
-					<p>Kumpulan quote tentang tawakal yang diambil dari ayat-ayat Al-Quran</p>
 				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #ec4899 0%, #ef4444 50%, #fbbf24 100%);">
-					<a href="/stories/tentang-syukur/">
-						<h3>Tentang Syukur</h3>
+				<li class="card">
+					<a class="card-link" href="/stories/tentang-syukur/">
+						<span class="card-cover" style="background-image: linear-gradient(135deg, #ec4899 0%, #ef4444 50%, #fbbf24 100%);" aria-hidden="true">
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+						</span>
+						<span class="card-content">
+							<time class="card-date">15 April 2026</time>
+							<h3 class="card-title">Tentang Syukur</h3>
+							<p class="card-desc">Kumpulan quote tentang syukur yang diambil dari ayat-ayat Al-Quran</p>
+							<span class="card-cta">Baca cerita <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+						</span>
 					</a>
-					<small>15 April 2026</small>
-					<p>Kumpulan quote tentang syukur yang diambil dari ayat-ayat Al-Quran</p>
 				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);">
-					<a href="/stories/tentang-menuntut-ilmu/">
-						<h3>Tentang Menuntut Ilmu</h3>
+				<li class="card">
+					<a class="card-link" href="/stories/tentang-menuntut-ilmu/">
+						<span class="card-cover" style="background-image: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);" aria-hidden="true">
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+						</span>
+						<span class="card-content">
+							<time class="card-date">12 Juli 2020</time>
+							<h3 class="card-title">Tentang Menuntut Ilmu</h3>
+							<p class="card-desc">Kumpulan quote tentang menuntut ilmu yang diambil dari ayat-ayat Al-Quran</p>
+							<span class="card-cta">Baca cerita <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+						</span>
 					</a>
-					<small>12 Juli 2020</small>
-					<p>Kumpulan quote tentang menuntut ilmu yang diambil dari ayat-ayat Al-Quran</p>
 				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #fbbf24 0%, #f97316 50%, #ef4444 100%);">
-					<a href="/stories/tentang-sedekah/">
-						<h3>Tentang Sedekah</h3>
+				<li class="card">
+					<a class="card-link" href="/stories/tentang-sedekah/">
+						<span class="card-cover" style="background-image: linear-gradient(135deg, #fbbf24 0%, #f97316 50%, #ef4444 100%);" aria-hidden="true">
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+						</span>
+						<span class="card-content">
+							<time class="card-date">06 Juli 2020</time>
+							<h3 class="card-title">Tentang Sedekah</h3>
+							<p class="card-desc">Kumpulan quote tentang sedekah yang diambil dari ayat-ayat Al-Quran</p>
+							<span class="card-cta">Baca cerita <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+						</span>
 					</a>
-					<small>06 Juli 2020</small>
-					<p>Kumpulan quote tentang sedekah yang diambil dari ayat-ayat Al-Quran</p>
 				</li>
-				<li class="card" style="background-image: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #4f46e5 100%);">
-					<a href="/stories/tentang-sabar/">
-						<h3>Tentang Sabar</h3>
+				<li class="card">
+					<a class="card-link" href="/stories/tentang-sabar/">
+						<span class="card-cover" style="background-image: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #4f46e5 100%);" aria-hidden="true">
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+						</span>
+						<span class="card-content">
+							<time class="card-date">02 Juli 2020</time>
+							<h3 class="card-title">Tentang Sabar</h3>
+							<p class="card-desc">Kumpulan quote tentang sabar yang diambil dari ayat-ayat Al-Quran</p>
+							<span class="card-cta">Baca cerita <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+						</span>
 					</a>
-					<small>02 Juli 2020</small>
-					<p>Kumpulan quote tentang sabar yang diambil dari ayat-ayat Al-Quran</p>
 				</li>
 				<!-- stories:end -->
 			</ul>
-		</article>
+		</section>
+
+		<div class="adswrapper">
+			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<!-- Responsive 2019 -->
+			<ins class="adsbygoogle"
+					 style="display:block"
+					 data-ad-client="ca-pub-5442972248172818"
+					 data-ad-slot="4265678371"
+					 data-ad-format="auto"
+					 data-full-width-responsive="true"></ins>
+			<script>
+					 (adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+		</div>
 	</main>
 
-	<div class="adswrapper" style="width:100%;width:flex;justify-content:center;align-items:cecnter;">
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<!-- Responsive 2019 -->
-		<ins class="adsbygoogle"
-				 style="display:block"
-				 data-ad-client="ca-pub-5442972248172818"
-				 data-ad-slot="4265678371"
-				 data-ad-format="auto"
-				 data-full-width-responsive="true"></ins>
-		<script>
-				 (adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
-	</div>
-
 	<footer>
-		<a href="/">Baca-Quran.id</a> © 2020
-                <p>
-                  Built with ❤️ by
-		  <a target="_blank" rel="noopener noreferrer" href="https://mazipan.space/">Irfan Maulana</a>
-                  <br/>
-                  <a href="https://www.baca-quran.id/tulisan/">BacaQuran.id Web Blog</a>
-                  <br /><br />
-                  <span>Cek juga: </span>
-        <a href="https://ksana.in" target="_blank" rel="noopener noreferrer">
-          Ksana.in
-        </a>
-        <span>, </span>
-        <a href="https://pramuka.online" target="_blank" rel="noopener noreferrer">
-          Pramuka.Online
-        </a>
-                </p>
+		<div class="footer-inner">
+			<div class="footer-brand">
+				<a class="brand" href="/stories/">
+					<span class="brand-mark" aria-hidden="true">۞</span>
+					<span>Web Stories</span>
+				</a>
+				<p>Cerita visual singkat dari ayat-ayat Al-Quran, dipersembahkan oleh Baca-Quran.id agar lebih dekat dengan firman-Nya, di mana saja.</p>
+			</div>
+			<div class="footer-col">
+				<h4>Jelajahi</h4>
+				<ul>
+					<li><a href="/stories/">Semua Cerita</a></li>
+					<li><a href="https://www.baca-quran.id/" target="_blank" rel="noopener noreferrer">Baca-Quran.id</a></li>
+					<li><a href="https://www.baca-quran.id/tulisan/" target="_blank" rel="noopener noreferrer">Web Blog</a></li>
+				</ul>
+			</div>
+			<div class="footer-col">
+				<h4>Lainnya</h4>
+				<ul>
+					<li><a href="https://mazipan.space/" target="_blank" rel="noopener noreferrer">Irfan Maulana</a></li>
+					<li><a href="https://ksana.in" target="_blank" rel="noopener noreferrer">Ksana.in</a></li>
+					<li><a href="https://pramuka.online" target="_blank" rel="noopener noreferrer">Pramuka.Online</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<span>Built with <span class="heart">❤️</span> by <a target="_blank" rel="noopener noreferrer" href="https://mazipan.space/">Irfan Maulana</a></span>
+			<span><a href="/">Baca-Quran.id</a> © 2020–2026</span>
+		</div>
 	</footer>
+
+	<script>
+		(function () {
+			var root = document.documentElement;
+			var toggle = document.getElementById('themeToggle');
+			if (toggle) {
+				toggle.addEventListener('click', function () {
+					var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+					root.setAttribute('data-theme', next);
+					try { localStorage.setItem('theme', next); } catch (e) {}
+				});
+			}
+
+			// Show how many stories are listed.
+			var countEl = document.getElementById('storyCount');
+			if (countEl) {
+				var total = document.querySelectorAll('.cards .card').length;
+				countEl.textContent = total + ' cerita';
+			}
+		})();
+	</script>
 </body>
 
 </html>
