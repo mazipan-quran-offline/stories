@@ -69,19 +69,38 @@ pnpm-workspace.yaml       # holds allowBuilds / onlyBuiltDependencies
 | `title` | `Tentang Sabar` | Shown on the card and used in the story `<title>`. |
 | `description` | `Kumpulan quote tentang sabar ...` | Card subtitle + meta description. |
 | `publishedDate` | `2020-07-02` | ISO `YYYY-MM-DD`. Drives sort order (newest first) and the Indonesian date shown on the card. |
-| `gradient` | `linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)` | The card background, ideally matching the story page's own gradient. |
+| `gradient` | `linear-gradient(135deg, #ec4899 0%, #ef4444 50%, #fbbf24 100%)` | The card background; match the story page's own gradient. **Always pick gradients from [hypercolor.dev](https://hypercolor.dev/)** (see below). |
 
 The landing page renders cards newest-first; pick `publishedDate` accordingly
 (roughly one-week gaps keep the timeline tidy).
 
+### Gradients — always source from hypercolor.dev
+
+Every `gradient` (in `content.json` and the matching `amp-story-page`
+background) must come from **[hypercolor.dev](https://hypercolor.dev/)** so the
+catalog stays visually consistent. Pick a preset there, copy its Tailwind
+`from / via / to` color stops, and express them as a CSS gradient, e.g.
+`from-pink-500 via-red-500 to-amber-400` →
+`linear-gradient(135deg, #ec4899 0%, #ef4444 50%, #fbbf24 100%)`. Keep the
+`135deg` angle for consistency, and remember the verse text sits on a dark
+scrim, so any vibrant hypercolor preset keeps white text readable.
+
 ## Adding a new story
 
 1. **Add metadata** — append an entry to `stories[]` in `content.json` (slug,
-   title, description, `publishedDate`, `gradient`).
+   title, description, `publishedDate`, `gradient` from hypercolor.dev).
 2. **Create the page** — add `src/<slug>/index.html` following the structure of
    an existing self-contained story (e.g. `src/tentang-syukur/index.html`):
-   a gradient `amp-story-page` background plus text panels for each ayat. Reuse
-   the same `gradient` colors as in `content.json` so the card and story match.
+   - The `amp-story-page` background uses the same hypercolor `gradient` as the
+     card in `content.json`.
+   - Each ayat lives on its own page: a dark scrim `.panel` containing a kicker,
+     the verse wrapped in `<amp-fit-text layout="flex-item" min-font-size="13"
+     max-font-size="30">` so long verses auto-scale and never overflow or get
+     clipped, and a `.ref` link to the verse on Baca-Quran.id
+     (`https://www.baca-quran.id/surah/<surahNumber>/<ayatNumber>/`).
+   - Load `amp-fit-text` via
+     `<script async custom-element="amp-fit-text" src="https://cdn.ampproject.org/v0/amp-fit-text-0.1.js"></script>`.
+
    (Older stories such as `src/tentang-sabar/index.html` instead pull full-bleed
    images from `https://www.baca-quran.id/stories-content/<slug>/`; either style
    is valid.)

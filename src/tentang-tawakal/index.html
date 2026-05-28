@@ -96,73 +96,86 @@
 		}
 
 		amp-story-page {
-			background-color: #0ba360;
-			background-image: linear-gradient(135deg, #0ba360 0%, #3cba92 100%);
+			background-color: #10b981;
+			background-image: linear-gradient(135deg, #10b981 0%, #14b8a6 50%, #06b6d4 100%);
 		}
 
-		amp-story-grid-layer.layer {
-			align-content: center;
-			justify-items: center;
-			padding: 2.5rem 2rem;
+		.page {
+			width: 100%;
+			height: 100%;
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			padding: 0.9rem 0.75rem;
 		}
 
 		.panel {
-			background: rgba(0, 0, 0, 0.32);
-			border-radius: 22px;
-			padding: 2rem 1.6rem;
-			max-width: 30rem;
+			display: flex;
+			flex-direction: column;
+			max-height: 100%;
+			box-sizing: border-box;
+			background: rgba(0, 0, 0, 0.36);
+			border-radius: 18px;
+			padding: 1.1rem 1rem;
 		}
 
 		.kicker {
+			flex: 0 0 auto;
 			text-transform: uppercase;
-			letter-spacing: 0.18em;
-			font-size: 0.78rem;
+			letter-spacing: 0.16em;
+			font-size: 0.72rem;
 			opacity: 0.9;
-			margin: 0 0 1rem 0;
+			margin: 0 0 0.7rem 0;
 			text-align: center;
 		}
 
 		.quote {
-			font-size: 1.4rem;
-			line-height: 1.75;
+			flex: 1 1 auto;
+			min-height: 0;
 			text-align: center;
-			margin: 0;
-			font-weight: 400;
+			line-height: 1.5;
 		}
 
 		.ref {
-			margin: 1.4rem 0 0 0;
+			flex: 0 0 auto;
+			display: block;
+			margin: 0.9rem 0 0 0;
 			text-align: center;
-			font-size: 0.95rem;
+			font-size: 0.9rem;
 			font-weight: 700;
-			letter-spacing: 0.04em;
-			opacity: 0.95;
+			letter-spacing: 0.02em;
+			color: #fff;
+			text-decoration: underline;
+			text-underline-offset: 3px;
+		}
+
+		.cover {
+			text-align: center;
 		}
 
 		.cover-title {
-			font-size: 2.9rem;
+			font-size: 2.3rem;
 			line-height: 1.2;
 			font-weight: 700;
-			text-align: center;
 			margin: 0;
 		}
 
 		.cover-sub {
-			margin-top: 1.2rem;
-			font-size: 1.05rem;
-			text-align: center;
+			margin: 1rem 0 0 0;
+			font-size: 1rem;
 			opacity: 0.92;
-			line-height: 1.6;
+			line-height: 1.55;
 		}
 
 		.brand {
 			position: absolute;
-			bottom: 1.4rem;
+			bottom: 1.2rem;
 			left: 0;
 			right: 0;
 			text-align: center;
-			font-size: 0.78rem;
-			letter-spacing: 0.15em;
+			font-size: 0.72rem;
+			letter-spacing: 0.14em;
 			text-transform: uppercase;
 			opacity: 0.85;
 		}
@@ -170,6 +183,7 @@
 
 	<script async src="https://cdn.ampproject.org/v0.js"></script>
 	<script async custom-element="amp-story" src="https://cdn.ampproject.org/v0/amp-story-1.0.js"></script>
+	<script async custom-element="amp-fit-text" src="https://cdn.ampproject.org/v0/amp-fit-text-0.1.js"></script>
 	<script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
 
 </head>
@@ -180,62 +194,74 @@
 		poster-portrait-src="https://www.baca-quran.id/meta-image.png">
 
 		<amp-story-page id="cover">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fade-in">
-					<p class="kicker">Web Stories</p>
-					<h1 class="cover-title">Tentang Tawakal</h1>
-					<p class="cover-sub">Kumpulan ayat Al-Quran tentang berserah diri kepada Allah</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel cover" animate-in="fade-in">
+						<p class="kicker">Web Stories</p>
+						<h1 class="cover-title">Tentang Tawakal</h1>
+						<p class="cover-sub">Kumpulan ayat Al-Quran tentang berserah diri kepada Allah</p>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 			<p class="brand">Baca-Quran.id</p>
 		</amp-story-page>
 
 		<amp-story-page id="at-talaq-3">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-top">
-					<p class="kicker">Tawakal</p>
-					<p class="quote">"Dan barangsiapa bertawakal kepada Allah, niscaya Allah akan mencukupkan (keperluan)nya. Sesungguhnya Allah melaksanakan urusan-Nya."</p>
-					<p class="ref">QS. At-Talaq: 3</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-top">
+						<p class="kicker">Tawakal</p>
+						<amp-fit-text layout="flex-item" min-font-size="13" max-font-size="30" class="quote">"Dan barangsiapa bertawakal kepada Allah, niscaya Allah akan mencukupkan (keperluan)nya. Sesungguhnya Allah melaksanakan urusan-Nya."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/65/3/" target="_blank" rel="noopener">Baca QS. At-Talaq: 3 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="ali-imran-159">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-bottom">
-					<p class="kicker">Tawakal</p>
-					<p class="quote">"Kemudian, apabila engkau telah membulatkan tekad, maka bertawakallah kepada Allah. Sungguh, Allah mencintai orang yang bertawakal."</p>
-					<p class="ref">QS. Ali 'Imran: 159</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-bottom">
+						<p class="kicker">Tawakal</p>
+						<amp-fit-text layout="flex-item" min-font-size="13" max-font-size="30" class="quote">"Kemudian, apabila engkau telah membulatkan tekad, maka bertawakallah kepada Allah. Sungguh, Allah mencintai orang yang bertawakal."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/3/159/" target="_blank" rel="noopener">Baca QS. Ali 'Imran: 159 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="al-anfal-2">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-top">
-					<p class="kicker">Tawakal</p>
-					<p class="quote">"Sesungguhnya orang-orang yang beriman adalah mereka yang apabila disebut nama Allah gemetar hatinya, dan apabila dibacakan ayat-ayat-Nya bertambah (kuat) imannya, dan hanya kepada Tuhan mereka bertawakal."</p>
-					<p class="ref">QS. Al-Anfal: 2</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-top">
+						<p class="kicker">Tawakal</p>
+						<amp-fit-text layout="flex-item" min-font-size="13" max-font-size="30" class="quote">"Sesungguhnya orang-orang yang beriman adalah mereka yang apabila disebut nama Allah gemetar hatinya, dan apabila dibacakan ayat-ayat-Nya bertambah (kuat) imannya, dan hanya kepada Tuhan mereka bertawakal."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/8/2/" target="_blank" rel="noopener">Baca QS. Al-Anfal: 2 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="al-maidah-23">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-bottom">
-					<p class="kicker">Tawakal</p>
-					<p class="quote">"Dan bertawakallah kamu hanya kepada Allah, jika kamu orang-orang beriman."</p>
-					<p class="ref">QS. Al-Ma'idah: 23</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-bottom">
+						<p class="kicker">Tawakal</p>
+						<amp-fit-text layout="flex-item" min-font-size="13" max-font-size="30" class="quote">"Dan bertawakallah kamu hanya kepada Allah, jika kamu orang-orang beriman."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/5/23/" target="_blank" rel="noopener">Baca QS. Al-Ma'idah: 23 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="hud-88">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-top">
-					<p class="kicker">Tawakal</p>
-					<p class="quote">"Dan tidak ada (manfaat) taufik bagiku melainkan dengan (pertolongan) Allah. Hanya kepada-Nya aku bertawakal dan hanya kepada-Nya aku kembali."</p>
-					<p class="ref">QS. Hud: 88</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-top">
+						<p class="kicker">Tawakal</p>
+						<amp-fit-text layout="flex-item" min-font-size="13" max-font-size="30" class="quote">"Dan tidak ada (manfaat) taufik bagiku melainkan dengan (pertolongan) Allah. Hanya kepada-Nya aku bertawakal dan hanya kepada-Nya aku kembali."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/11/88/" target="_blank" rel="noopener">Baca QS. Hud: 88 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
