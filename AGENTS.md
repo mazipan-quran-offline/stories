@@ -94,9 +94,9 @@ scrim, so any vibrant hypercolor preset keeps white text readable.
    - The `amp-story-page` background uses the same hypercolor `gradient` as the
      card in `content.json`.
    - Each ayat lives on its own page: a dark scrim `.panel` containing a kicker,
-     the verse wrapped in `<amp-fit-text layout="flex-item" min-font-size="13"
-     max-font-size="30">` so long verses auto-scale and never overflow or get
-     clipped, and a `.ref` link to the verse on Baca-Quran.id
+     the verse wrapped in `<amp-fit-text layout="flex-item" ...>` so it
+     auto-scales to fit and never overflows or gets clipped, and a `.ref` link
+     to the verse on Baca-Quran.id
      (`https://www.baca-quran.id/surah/<surahNumber>/<ayatNumber>/`).
    - Load `amp-fit-text` via
      `<script async custom-element="amp-fit-text" src="https://cdn.ampproject.org/v0/amp-fit-text-0.1.js"></script>`.
@@ -104,6 +104,24 @@ scrim, so any vibrant hypercolor preset keeps white text readable.
    (Older stories such as `src/tentang-sabar/index.html` instead pull full-bleed
    images from `https://www.baca-quran.id/stories-content/<slug>/`; either style
    is valid.)
+
+### Font sizing per verse — tune `max-font-size` to verse length
+
+`amp-fit-text` always shrinks text down (to `min-font-size`) to make it fit, so
+nothing is ever clipped. But the **`max-font-size` cap is per verse** and should
+track how long the ayat is — otherwise a short verse renders awkwardly small
+while a long one starts oversized before shrinking. Keep `min-font-size="14"`
+and pick the cap by character length:
+
+| Verse length (chars) | `max-font-size` | Example |
+| --- | --- | --- |
+| ≤ 90 (very short) | `46` | Ar-Rahman 55:1 (<https://www.baca-quran.id/surah/55/1/>), Al-Fatihah 1:1 (<https://www.baca-quran.id/surah/1/1/>) |
+| ≤ 180 (medium) | `36` | most ayat |
+| ≤ 280 (long) | `28` | multi-clause ayat |
+| > 280 (very long) | `24` | e.g. Al-Isra 17:23 |
+
+So a one-line verse can fill the panel at ~46px while a long verse settles
+smaller — each page is sized to its own content, not a single fixed value.
 3. **Sync the landing page** — run `pnpm run generate:index` and commit
    `src/index.html`. This only rewrites the cards between the
    `<!-- stories:start -->` / `<!-- stories:end -->` markers inside
