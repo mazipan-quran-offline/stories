@@ -42,14 +42,18 @@ const indexPath = join(REPO_ROOT, 'src', 'index.html');
 const html = readFileSync(indexPath, 'utf8');
 
 const startIdx = html.indexOf(START);
-const endIdx = html.indexOf(END);
-if (startIdx === -1 || endIdx === -1 || endIdx < startIdx) {
+// Always look for the end marker *after* the start marker, so the whole region
+// between them is replaced regardless of what was hand-edited in there.
+const endIdx = startIdx === -1 ? -1 : html.indexOf(END, startIdx);
+if (startIdx === -1 || endIdx === -1) {
   throw new Error(
     `Could not find the "stories:start"/"stories:end" markers in ${indexPath}. ` +
       'Make sure both marker comments exist inside <ul class="cards">.',
   );
 }
 
+// Keep the start marker line and the end marker line; discard everything in
+// between (any manual edits) and re-emit the cards from content.json.
 const startLineEnd = html.indexOf('\n', startIdx) + 1;
 const cards = loadStories().map(renderCard).join('\n');
 const updated = `${html.slice(0, startLineEnd)}${cards}\n\t\t\t\t${html.slice(endIdx)}`;
