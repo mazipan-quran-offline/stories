@@ -96,73 +96,86 @@
 		}
 
 		amp-story-page {
-			background-color: #c94b4b;
-			background-image: linear-gradient(135deg, #c94b4b 0%, #4b134f 100%);
+			background-color: #fb7185;
+			background-image: linear-gradient(135deg, #fb7185 0%, #d946ef 50%, #6366f1 100%);
 		}
 
-		amp-story-grid-layer.layer {
-			align-content: center;
-			justify-items: center;
-			padding: 2.5rem 2rem;
+		.page {
+			width: 100%;
+			height: 100%;
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			padding: 0.9rem 0.75rem;
 		}
 
 		.panel {
-			background: rgba(0, 0, 0, 0.32);
-			border-radius: 22px;
-			padding: 2rem 1.6rem;
-			max-width: 30rem;
+			display: flex;
+			flex-direction: column;
+			max-height: 100%;
+			box-sizing: border-box;
+			background: rgba(0, 0, 0, 0.36);
+			border-radius: 18px;
+			padding: 1.1rem 1rem;
 		}
 
 		.kicker {
+			flex: 0 0 auto;
 			text-transform: uppercase;
-			letter-spacing: 0.18em;
-			font-size: 0.78rem;
+			letter-spacing: 0.16em;
+			font-size: 0.72rem;
 			opacity: 0.9;
-			margin: 0 0 1rem 0;
+			margin: 0 0 0.7rem 0;
 			text-align: center;
 		}
 
 		.quote {
-			font-size: 1.3rem;
-			line-height: 1.7;
+			flex: 1 1 auto;
+			min-height: 0;
 			text-align: center;
-			margin: 0;
-			font-weight: 400;
+			line-height: 1.5;
 		}
 
 		.ref {
-			margin: 1.4rem 0 0 0;
+			flex: 0 0 auto;
+			display: block;
+			margin: 0.9rem 0 0 0;
 			text-align: center;
-			font-size: 0.95rem;
+			font-size: 0.9rem;
 			font-weight: 700;
-			letter-spacing: 0.04em;
-			opacity: 0.95;
+			letter-spacing: 0.02em;
+			color: #fff;
+			text-decoration: underline;
+			text-underline-offset: 3px;
+		}
+
+		.cover {
+			text-align: center;
 		}
 
 		.cover-title {
-			font-size: 2.4rem;
-			line-height: 1.25;
+			font-size: 2.3rem;
+			line-height: 1.2;
 			font-weight: 700;
-			text-align: center;
 			margin: 0;
 		}
 
 		.cover-sub {
-			margin-top: 1.2rem;
-			font-size: 1.05rem;
-			text-align: center;
+			margin: 1rem 0 0 0;
+			font-size: 1rem;
 			opacity: 0.92;
-			line-height: 1.6;
+			line-height: 1.55;
 		}
 
 		.brand {
 			position: absolute;
-			bottom: 1.4rem;
+			bottom: 1.2rem;
 			left: 0;
 			right: 0;
 			text-align: center;
-			font-size: 0.78rem;
-			letter-spacing: 0.15em;
+			font-size: 0.72rem;
+			letter-spacing: 0.14em;
 			text-transform: uppercase;
 			opacity: 0.85;
 		}
@@ -170,6 +183,7 @@
 
 	<script async src="https://cdn.ampproject.org/v0.js"></script>
 	<script async custom-element="amp-story" src="https://cdn.ampproject.org/v0/amp-story-1.0.js"></script>
+	<script async custom-element="amp-fit-text" src="https://cdn.ampproject.org/v0/amp-fit-text-0.1.js"></script>
 	<script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
 
 </head>
@@ -180,62 +194,74 @@
 		poster-portrait-src="https://www.baca-quran.id/meta-image.png">
 
 		<amp-story-page id="cover">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fade-in">
-					<p class="kicker">Web Stories</p>
-					<h1 class="cover-title">Berbakti kepada Orang Tua</h1>
-					<p class="cover-sub">Kumpulan ayat Al-Quran tentang berbuat baik kepada ibu dan bapak</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel cover" animate-in="fade-in">
+						<p class="kicker">Web Stories</p>
+						<h1 class="cover-title">Berbakti kepada Orang Tua</h1>
+						<p class="cover-sub">Kumpulan ayat Al-Quran tentang berbuat baik kepada ibu dan bapak</p>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 			<p class="brand">Baca-Quran.id</p>
 		</amp-story-page>
 
 		<amp-story-page id="al-isra-23">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-top">
-					<p class="kicker">Birrul Walidain</p>
-					<p class="quote">"Dan Tuhanmu telah memerintahkan agar kamu jangan menyembah selain Dia dan hendaklah berbuat baik kepada ibu bapak. Jika salah seorang di antara keduanya atau kedua-duanya sampai berusia lanjut dalam pemeliharaanmu, maka janganlah sekali-kali engkau mengatakan kepada keduanya perkataan 'ah' dan janganlah engkau membentak keduanya, dan ucapkanlah kepada keduanya perkataan yang baik."</p>
-					<p class="ref">QS. Al-Isra: 23</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-top">
+						<p class="kicker">Birrul Walidain</p>
+						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="24" class="quote">"Dan Tuhanmu telah memerintahkan agar kamu jangan menyembah selain Dia dan hendaklah berbuat baik kepada ibu bapak. Jika salah seorang di antara keduanya atau kedua-duanya sampai berusia lanjut dalam pemeliharaanmu, maka janganlah sekali-kali engkau mengatakan kepada keduanya perkataan 'ah' dan janganlah engkau membentak keduanya, dan ucapkanlah kepada keduanya perkataan yang baik."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/17/23/" target="_blank" rel="noopener">Baca QS. Al-Isra: 23 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="al-isra-24">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-bottom">
-					<p class="kicker">Birrul Walidain</p>
-					<p class="quote">"Dan rendahkanlah dirimu terhadap keduanya dengan penuh kasih sayang dan ucapkanlah, 'Wahai Tuhanku! Sayangilah keduanya sebagaimana mereka berdua telah mendidik aku pada waktu kecil.'"</p>
-					<p class="ref">QS. Al-Isra: 24</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-bottom">
+						<p class="kicker">Birrul Walidain</p>
+						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="28" class="quote">"Dan rendahkanlah dirimu terhadap keduanya dengan penuh kasih sayang dan ucapkanlah, 'Wahai Tuhanku! Sayangilah keduanya sebagaimana mereka berdua telah mendidik aku pada waktu kecil.'"</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/17/24/" target="_blank" rel="noopener">Baca QS. Al-Isra: 24 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="luqman-14">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-top">
-					<p class="kicker">Birrul Walidain</p>
-					<p class="quote">"Dan Kami perintahkan kepada manusia (agar berbuat baik) kepada kedua orang tuanya. Ibunya telah mengandungnya dalam keadaan lemah yang bertambah-tambah, dan menyapihnya dalam usia dua tahun. Bersyukurlah kepada-Ku dan kepada kedua orang tuamu. Hanya kepada Aku kembalimu."</p>
-					<p class="ref">QS. Luqman: 14</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-top">
+						<p class="kicker">Birrul Walidain</p>
+						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="28" class="quote">"Dan Kami perintahkan kepada manusia (agar berbuat baik) kepada kedua orang tuanya. Ibunya telah mengandungnya dalam keadaan lemah yang bertambah-tambah, dan menyapihnya dalam usia dua tahun. Bersyukurlah kepada-Ku dan kepada kedua orang tuamu. Hanya kepada Aku kembalimu."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/31/14/" target="_blank" rel="noopener">Baca QS. Luqman: 14 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="al-ankabut-8">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-bottom">
-					<p class="kicker">Birrul Walidain</p>
-					<p class="quote">"Dan Kami wajibkan kepada manusia (berbuat) kebaikan kepada kedua orang tuanya."</p>
-					<p class="ref">QS. Al-Ankabut: 8</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-bottom">
+						<p class="kicker">Birrul Walidain</p>
+						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="46" class="quote">"Dan Kami wajibkan kepada manusia (berbuat) kebaikan kepada kedua orang tuanya."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/29/8/" target="_blank" rel="noopener">Baca QS. Al-Ankabut: 8 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="an-nisa-36">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-top">
-					<p class="kicker">Birrul Walidain</p>
-					<p class="quote">"Dan sembahlah Allah dan janganlah kamu mempersekutukan-Nya dengan sesuatu apa pun. Dan berbuat baiklah kepada kedua orang tua, karib kerabat, anak-anak yatim, dan orang-orang miskin."</p>
-					<p class="ref">QS. An-Nisa: 36</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-top">
+						<p class="kicker">Birrul Walidain</p>
+						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="28" class="quote">"Dan sembahlah Allah dan janganlah kamu mempersekutukan-Nya dengan sesuatu apa pun. Dan berbuat baiklah kepada kedua orang tua, karib kerabat, anak-anak yatim, dan orang-orang miskin."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/4/36/" target="_blank" rel="noopener">Baca QS. An-Nisa: 36 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>

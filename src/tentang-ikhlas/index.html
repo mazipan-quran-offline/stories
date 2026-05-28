@@ -96,73 +96,86 @@
 		}
 
 		amp-story-page {
-			background-color: #6a11cb;
-			background-image: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+			background-color: #a855f7;
+			background-image: linear-gradient(135deg, #a855f7 0%, #8b5cf6 50%, #4f46e5 100%);
 		}
 
-		amp-story-grid-layer.layer {
-			align-content: center;
-			justify-items: center;
-			padding: 2.5rem 2rem;
+		.page {
+			width: 100%;
+			height: 100%;
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			padding: 0.9rem 0.75rem;
 		}
 
 		.panel {
-			background: rgba(0, 0, 0, 0.32);
-			border-radius: 22px;
-			padding: 2rem 1.6rem;
-			max-width: 30rem;
+			display: flex;
+			flex-direction: column;
+			max-height: 100%;
+			box-sizing: border-box;
+			background: rgba(0, 0, 0, 0.36);
+			border-radius: 18px;
+			padding: 1.1rem 1rem;
 		}
 
 		.kicker {
+			flex: 0 0 auto;
 			text-transform: uppercase;
-			letter-spacing: 0.18em;
-			font-size: 0.78rem;
+			letter-spacing: 0.16em;
+			font-size: 0.72rem;
 			opacity: 0.9;
-			margin: 0 0 1rem 0;
+			margin: 0 0 0.7rem 0;
 			text-align: center;
 		}
 
 		.quote {
-			font-size: 1.4rem;
-			line-height: 1.75;
+			flex: 1 1 auto;
+			min-height: 0;
 			text-align: center;
-			margin: 0;
-			font-weight: 400;
+			line-height: 1.5;
 		}
 
 		.ref {
-			margin: 1.4rem 0 0 0;
+			flex: 0 0 auto;
+			display: block;
+			margin: 0.9rem 0 0 0;
 			text-align: center;
-			font-size: 0.95rem;
+			font-size: 0.9rem;
 			font-weight: 700;
-			letter-spacing: 0.04em;
-			opacity: 0.95;
+			letter-spacing: 0.02em;
+			color: #fff;
+			text-decoration: underline;
+			text-underline-offset: 3px;
+		}
+
+		.cover {
+			text-align: center;
 		}
 
 		.cover-title {
-			font-size: 2.9rem;
+			font-size: 2.3rem;
 			line-height: 1.2;
 			font-weight: 700;
-			text-align: center;
 			margin: 0;
 		}
 
 		.cover-sub {
-			margin-top: 1.2rem;
-			font-size: 1.05rem;
-			text-align: center;
+			margin: 1rem 0 0 0;
+			font-size: 1rem;
 			opacity: 0.92;
-			line-height: 1.6;
+			line-height: 1.55;
 		}
 
 		.brand {
 			position: absolute;
-			bottom: 1.4rem;
+			bottom: 1.2rem;
 			left: 0;
 			right: 0;
 			text-align: center;
-			font-size: 0.78rem;
-			letter-spacing: 0.15em;
+			font-size: 0.72rem;
+			letter-spacing: 0.14em;
 			text-transform: uppercase;
 			opacity: 0.85;
 		}
@@ -170,6 +183,7 @@
 
 	<script async src="https://cdn.ampproject.org/v0.js"></script>
 	<script async custom-element="amp-story" src="https://cdn.ampproject.org/v0/amp-story-1.0.js"></script>
+	<script async custom-element="amp-fit-text" src="https://cdn.ampproject.org/v0/amp-fit-text-0.1.js"></script>
 	<script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
 
 </head>
@@ -180,62 +194,74 @@
 		poster-portrait-src="https://www.baca-quran.id/meta-image.png">
 
 		<amp-story-page id="cover">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fade-in">
-					<p class="kicker">Web Stories</p>
-					<h1 class="cover-title">Tentang Ikhlas</h1>
-					<p class="cover-sub">Kumpulan ayat Al-Quran tentang ketulusan beribadah karena Allah</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel cover" animate-in="fade-in">
+						<p class="kicker">Web Stories</p>
+						<h1 class="cover-title">Tentang Ikhlas</h1>
+						<p class="cover-sub">Kumpulan ayat Al-Quran tentang ketulusan beribadah karena Allah</p>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 			<p class="brand">Baca-Quran.id</p>
 		</amp-story-page>
 
 		<amp-story-page id="al-bayyinah-5">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-top">
-					<p class="kicker">Ikhlas</p>
-					<p class="quote">"Padahal mereka hanya diperintah menyembah Allah dengan ikhlas menaati-Nya semata-mata karena (menjalankan) agama, dan juga agar melaksanakan salat dan menunaikan zakat; dan yang demikian itulah agama yang lurus."</p>
-					<p class="ref">QS. Al-Bayyinah: 5</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-top">
+						<p class="kicker">Ikhlas</p>
+						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="28" class="quote">"Padahal mereka hanya diperintah menyembah Allah dengan ikhlas menaati-Nya semata-mata karena (menjalankan) agama, dan juga agar melaksanakan salat dan menunaikan zakat; dan yang demikian itulah agama yang lurus."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/98/5/" target="_blank" rel="noopener">Baca QS. Al-Bayyinah: 5 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="az-zumar-2">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-bottom">
-					<p class="kicker">Ikhlas</p>
-					<p class="quote">"Sesungguhnya Kami menurunkan Kitab (Al-Qur'an) kepadamu dengan (membawa) kebenaran. Maka sembahlah Allah dengan tulus ikhlas beragama kepada-Nya."</p>
-					<p class="ref">QS. Az-Zumar: 2</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-bottom">
+						<p class="kicker">Ikhlas</p>
+						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="36" class="quote">"Sesungguhnya Kami menurunkan Kitab (Al-Qur'an) kepadamu dengan (membawa) kebenaran. Maka sembahlah Allah dengan tulus ikhlas beragama kepada-Nya."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/39/2/" target="_blank" rel="noopener">Baca QS. Az-Zumar: 2 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="al-anam-162">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-top">
-					<p class="kicker">Ikhlas</p>
-					<p class="quote">"Katakanlah (Muhammad), 'Sesungguhnya salatku, ibadahku, hidupku dan matiku hanyalah untuk Allah, Tuhan seluruh alam.'"</p>
-					<p class="ref">QS. Al-An'am: 162</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-top">
+						<p class="kicker">Ikhlas</p>
+						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="36" class="quote">"Katakanlah (Muhammad), 'Sesungguhnya salatku, ibadahku, hidupku dan matiku hanyalah untuk Allah, Tuhan seluruh alam.'"</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/6/162/" target="_blank" rel="noopener">Baca QS. Al-An'am: 162 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="az-zumar-11">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-bottom">
-					<p class="kicker">Ikhlas</p>
-					<p class="quote">"Katakanlah, 'Sesungguhnya aku diperintahkan menyembah Allah dengan tulus ikhlas beragama kepada-Nya.'"</p>
-					<p class="ref">QS. Az-Zumar: 11</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-bottom">
+						<p class="kicker">Ikhlas</p>
+						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="36" class="quote">"Katakanlah, 'Sesungguhnya aku diperintahkan menyembah Allah dengan tulus ikhlas beragama kepada-Nya.'"</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/39/11/" target="_blank" rel="noopener">Baca QS. Az-Zumar: 11 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="al-kahf-110">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-top">
-					<p class="kicker">Ikhlas</p>
-					<p class="quote">"Maka barangsiapa mengharap pertemuan dengan Tuhannya, hendaklah dia mengerjakan kebajikan dan janganlah dia mempersekutukan dengan sesuatu pun dalam beribadah kepada Tuhannya."</p>
-					<p class="ref">QS. Al-Kahf: 110</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-top">
+						<p class="kicker">Ikhlas</p>
+						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="36" class="quote">"Maka barangsiapa mengharap pertemuan dengan Tuhannya, hendaklah dia mengerjakan kebajikan dan janganlah dia mempersekutukan dengan sesuatu pun dalam beribadah kepada Tuhannya."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/18/110/" target="_blank" rel="noopener">Baca QS. Al-Kahf: 110 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>

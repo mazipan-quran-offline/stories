@@ -96,73 +96,86 @@
 		}
 
 		amp-story-page {
-			background-color: #2193b0;
-			background-image: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
+			background-color: #22d3ee;
+			background-image: linear-gradient(135deg, #22d3ee 0%, #0ea5e9 50%, #2563eb 100%);
 		}
 
-		amp-story-grid-layer.layer {
-			align-content: center;
-			justify-items: center;
-			padding: 2.5rem 2rem;
+		.page {
+			width: 100%;
+			height: 100%;
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			padding: 0.9rem 0.75rem;
 		}
 
 		.panel {
-			background: rgba(0, 0, 0, 0.32);
-			border-radius: 22px;
-			padding: 2rem 1.6rem;
-			max-width: 30rem;
+			display: flex;
+			flex-direction: column;
+			max-height: 100%;
+			box-sizing: border-box;
+			background: rgba(0, 0, 0, 0.36);
+			border-radius: 18px;
+			padding: 1.1rem 1rem;
 		}
 
 		.kicker {
+			flex: 0 0 auto;
 			text-transform: uppercase;
-			letter-spacing: 0.18em;
-			font-size: 0.78rem;
+			letter-spacing: 0.16em;
+			font-size: 0.72rem;
 			opacity: 0.9;
-			margin: 0 0 1rem 0;
+			margin: 0 0 0.7rem 0;
 			text-align: center;
 		}
 
 		.quote {
-			font-size: 1.4rem;
-			line-height: 1.75;
+			flex: 1 1 auto;
+			min-height: 0;
 			text-align: center;
-			margin: 0;
-			font-weight: 400;
+			line-height: 1.5;
 		}
 
 		.ref {
-			margin: 1.4rem 0 0 0;
+			flex: 0 0 auto;
+			display: block;
+			margin: 0.9rem 0 0 0;
 			text-align: center;
-			font-size: 0.95rem;
+			font-size: 0.9rem;
 			font-weight: 700;
-			letter-spacing: 0.04em;
-			opacity: 0.95;
+			letter-spacing: 0.02em;
+			color: #fff;
+			text-decoration: underline;
+			text-underline-offset: 3px;
+		}
+
+		.cover {
+			text-align: center;
 		}
 
 		.cover-title {
-			font-size: 2.7rem;
+			font-size: 2.3rem;
 			line-height: 1.2;
 			font-weight: 700;
-			text-align: center;
 			margin: 0;
 		}
 
 		.cover-sub {
-			margin-top: 1.2rem;
-			font-size: 1.05rem;
-			text-align: center;
+			margin: 1rem 0 0 0;
+			font-size: 1rem;
 			opacity: 0.92;
-			line-height: 1.6;
+			line-height: 1.55;
 		}
 
 		.brand {
 			position: absolute;
-			bottom: 1.4rem;
+			bottom: 1.2rem;
 			left: 0;
 			right: 0;
 			text-align: center;
-			font-size: 0.78rem;
-			letter-spacing: 0.15em;
+			font-size: 0.72rem;
+			letter-spacing: 0.14em;
 			text-transform: uppercase;
 			opacity: 0.85;
 		}
@@ -170,6 +183,7 @@
 
 	<script async src="https://cdn.ampproject.org/v0.js"></script>
 	<script async custom-element="amp-story" src="https://cdn.ampproject.org/v0/amp-story-1.0.js"></script>
+	<script async custom-element="amp-fit-text" src="https://cdn.ampproject.org/v0/amp-fit-text-0.1.js"></script>
 	<script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
 
 </head>
@@ -180,62 +194,74 @@
 		poster-portrait-src="https://www.baca-quran.id/meta-image.png">
 
 		<amp-story-page id="cover">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fade-in">
-					<p class="kicker">Web Stories</p>
-					<h1 class="cover-title">Tentang Silaturahmi</h1>
-					<p class="cover-sub">Kumpulan ayat Al-Quran tentang menyambung hubungan kekeluargaan</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel cover" animate-in="fade-in">
+						<p class="kicker">Web Stories</p>
+						<h1 class="cover-title">Tentang Silaturahmi</h1>
+						<p class="cover-sub">Kumpulan ayat Al-Quran tentang menyambung hubungan kekeluargaan</p>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 			<p class="brand">Baca-Quran.id</p>
 		</amp-story-page>
 
 		<amp-story-page id="an-nisa-1">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-top">
-					<p class="kicker">Silaturahmi</p>
-					<p class="quote">"Dan bertakwalah kepada Allah yang dengan nama-Nya kamu saling meminta, dan (peliharalah) hubungan kekeluargaan. Sesungguhnya Allah selalu menjaga dan mengawasimu."</p>
-					<p class="ref">QS. An-Nisa: 1</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-top">
+						<p class="kicker">Silaturahmi</p>
+						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="36" class="quote">"Dan bertakwalah kepada Allah yang dengan nama-Nya kamu saling meminta, dan (peliharalah) hubungan kekeluargaan. Sesungguhnya Allah selalu menjaga dan mengawasimu."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/4/1/" target="_blank" rel="noopener">Baca QS. An-Nisa: 1 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="ar-rad-21">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-bottom">
-					<p class="kicker">Silaturahmi</p>
-					<p class="quote">"Dan orang-orang yang menghubungkan apa yang diperintahkan Allah agar dihubungkan, dan mereka takut kepada Tuhannya dan takut kepada hisab yang buruk."</p>
-					<p class="ref">QS. Ar-Ra'd: 21</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-bottom">
+						<p class="kicker">Silaturahmi</p>
+						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="36" class="quote">"Dan orang-orang yang menghubungkan apa yang diperintahkan Allah agar dihubungkan, dan mereka takut kepada Tuhannya dan takut kepada hisab yang buruk."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/13/21/" target="_blank" rel="noopener">Baca QS. Ar-Ra'd: 21 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="an-nahl-90">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-top">
-					<p class="kicker">Silaturahmi</p>
-					<p class="quote">"Sesungguhnya Allah menyuruh (kamu) berlaku adil dan berbuat kebajikan, memberi bantuan kepada kerabat, dan Dia melarang (melakukan) perbuatan keji, kemungkaran, dan permusuhan."</p>
-					<p class="ref">QS. An-Nahl: 90</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-top">
+						<p class="kicker">Silaturahmi</p>
+						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="36" class="quote">"Sesungguhnya Allah menyuruh (kamu) berlaku adil dan berbuat kebajikan, memberi bantuan kepada kerabat, dan Dia melarang (melakukan) perbuatan keji, kemungkaran, dan permusuhan."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/16/90/" target="_blank" rel="noopener">Baca QS. An-Nahl: 90 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="muhammad-22">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-bottom">
-					<p class="kicker">Silaturahmi</p>
-					<p class="quote">"Maka apakah sekiranya kamu berkuasa, kamu akan berbuat kerusakan di bumi dan memutuskan hubungan kekeluargaan?"</p>
-					<p class="ref">QS. Muhammad: 22</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-bottom">
+						<p class="kicker">Silaturahmi</p>
+						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="36" class="quote">"Maka apakah sekiranya kamu berkuasa, kamu akan berbuat kerusakan di bumi dan memutuskan hubungan kekeluargaan?"</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/47/22/" target="_blank" rel="noopener">Baca QS. Muhammad: 22 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
 		<amp-story-page id="al-isra-26">
-			<amp-story-grid-layer template="vertical" class="layer">
-				<div class="panel" animate-in="fly-in-top">
-					<p class="kicker">Silaturahmi</p>
-					<p class="quote">"Dan berikanlah haknya kepada kerabat dekat, juga kepada orang miskin dan orang yang dalam perjalanan; dan janganlah kamu menghambur-hamburkan (hartamu) secara boros."</p>
-					<p class="ref">QS. Al-Isra: 26</p>
+			<amp-story-grid-layer template="fill">
+				<div class="page">
+					<div class="panel" animate-in="fly-in-top">
+						<p class="kicker">Silaturahmi</p>
+						<amp-fit-text layout="flex-item" min-font-size="14" max-font-size="36" class="quote">"Dan berikanlah haknya kepada kerabat dekat, juga kepada orang miskin dan orang yang dalam perjalanan; dan janganlah kamu menghambur-hamburkan (hartamu) secara boros."</amp-fit-text>
+						<a class="ref" href="https://www.baca-quran.id/surah/17/26/" target="_blank" rel="noopener">Baca QS. Al-Isra: 26 ↗</a>
+					</div>
 				</div>
 			</amp-story-grid-layer>
 		</amp-story-page>
