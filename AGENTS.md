@@ -349,17 +349,45 @@ four rotated copies into the `background-image` slots above, add
 `position: relative` to `.panel`, then run `pnpm run validate` and confirm the
 `<style amp-custom>` stays under 75 KB.
 
-3. **Sync the landing page** — run `pnpm run generate:index` and commit
+3. **Add the next-story navigation slide** — every story ends with a
+   full-screen slide so tapping anywhere navigates to the next story.
+   - Insert `<amp-story-page id="next-story">` as the **last page** of the new
+     story, immediately before the `<amp-analytics>` block.
+   - For **gradient stories** (current house style): wrap the slide content in
+     `<a class="next-story-link" href="…" target="_blank" rel="noopener">` and
+     reuse the existing `.page`, `.panel`, `.cover`, `.kicker`, `.cover-title`,
+     and `.cover-sub` classes. Add `.next-story-link { display: block; width:
+     100%; height: 100%; text-decoration: none; color: inherit; }` to the
+     `<style amp-custom>` block.
+   - For **older image-based stories** (`tentang-menuntut-ilmu`,
+     `tentang-sedekah`, `tentang-sabar`): use `<a class="ns-link">` and add
+     `#next-story { background-image: <story-gradient>; }` plus the full
+     `.ns-link`, `.ns-page`, `.ns-panel`, `.ns-kicker`, `.ns-title`, `.ns-hint`
+     rule set to `<style amp-custom>` — see any of those three files for the
+     exact CSS template.
+   - **Update the chain.** Stories form a loop in `content.json` order (index 0
+     → 1 → … → last → index 0). When inserting a new story at position N:
+     1. Find the story currently at position N−1 (the one that will now precede
+        the new story).
+     2. Update **its** `id="next-story"` slide — change the `href` and the
+        displayed title to point to the new story.
+     3. Point the **new story's** `id="next-story"` slide at whatever was
+        previously the "next" target of the predecessor.
+   - Slide content: a `kicker` labelled "Cerita Selanjutnya", an `h2` with the
+     next story's title, and a hint "Ketuk untuk melanjutkan ↗", each with
+     `animate-in` entrance attributes matching the story's motion style.
+
+4. **Sync the landing page** — run `pnpm run generate:index` and commit
    `src/index.html`. This only rewrites the cards between the
    `<!-- stories:start -->` / `<!-- stories:end -->` markers inside
    `<ul class="cards">`; the rest of the page (styles, footer, scripts) is a
    normal hand-edited template. The step is intentionally NOT part of the build,
    so run it locally whenever `content.json` changes.
-4. **Validate** — run `pnpm run validate`. Every AMP story must pass the
+5. **Validate** — run `pnpm run validate`. Every AMP story must pass the
    official `amphtml-validator`; an invalid document stops the AMP runtime from
    upgrading components like `amp-fit-text`, which silently hides the verse text.
    This is a CI gate, so a failing story will block the deploy.
-5. **Verify** — run `pnpm run build` (this regenerates `src/sitemap.xml`) and
+6. **Verify** — run `pnpm run build` (this regenerates `src/sitemap.xml`) and
    confirm `dist/<slug>/index.html` and the new sitemap entry exist.
 
 > `src/sitemap.xml` is fully generated — don't hand-edit it. In `src/index.html`,
