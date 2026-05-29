@@ -200,6 +200,155 @@ Current per-theme motion (cover / verse A / verse B, tempo):
 | tentang-berbakti-kepada-orang-tua | drop | fly-in-bottom / drop | 0.9s ease-out |
 | tentang-silaturahmi | fly-in-left | fly-in-left / fly-in-right | 0.9s ease-out |
 
+### Panel ornaments — decorate the scrim with inline-SVG accents
+
+Gradient stories carry an **ornate vintage-filigree corner ornament** on the
+verse `.panel`, drawn entirely in CSS via a `.panel::before` pseudo-element —
+**no markup changes**, so it applies to every page of a story at once. Keep
+these rules:
+
+- **CSS-only, inline SVG.** The art is four `background-image:
+  url("data:image/svg+xml,…")` layers on `.panel::before` — the *same* motif
+  placed in each corner, rotated `0/90/180/270` about the viewBox centre
+  (`<g transform='rotate(90 36 36)'>…`). Add `position: relative;` to
+  `.panel`, and give the pseudo-element
+  `content: ""; position: absolute; inset: 6px; pointer-events: none;` with
+  `background-repeat: no-repeat`,
+  `background-position: top left, top right, bottom right, bottom left`, and
+  `background-size: 124px 124px`. Data-URI SVG backgrounds are AMP-valid —
+  `pnpm run validate` still passes.
+- **Original art only — never embed licensed assets.** Hand-author the SVGs.
+  Stock vectors (e.g. Freepik/macrovector) may be used as *visual inspiration*
+  only; do not paste their paths or commit their files (licensing +
+  attribution strings we don't want in the repo).
+- **White at ~half opacity.** Strokes/fills are `#ffffff` at `opacity` ~0.5
+  (strokes ~0.55, filled leaves ~0.4, accent dots ~0.6). At that strength it's
+  fine for the ornament to overlap the verse text — it reads as a watermark,
+  not clutter. URL-encode the SVG (`#` → `%23`, quotes/spaces escaped);
+  single-quote all attributes inside.
+- **Authoring canvas.** Each motif lives in a `0 0 72 72` viewBox oriented for
+  the **top-left** corner, built from: a thin frame line hugging the two
+  edges, a flowing scroll/vine with spiral terminals, a few filled
+  leaves/petals, and small accent dots. Aim for an intricate look but keep it
+  compact (~2–3 KB raw); ×4 rotated copies must leave the whole
+  `<style amp-custom>` under AMP's **75 KB** cap (current stories sit ~8–10 KB).
+- **The 3 oldest stories stay plain.** `tentang-menuntut-ilmu`,
+  `tentang-sabar`, `tentang-sedekah` are full-bleed-image stories with no
+  `.panel` scrim — leave them untouched.
+- **One distinct motif per story** so the catalog doesn't feel templated;
+  don't reuse a neighbour's motif.
+
+#### Placement styles
+
+All three are just different `background-position` / `background-size` sets on
+the same `.panel::before`. **Corner** is the current house style; **edge** and
+**scatter** are documented below as ready-to-reuse variants (we've used them
+before — keep them in the toolbox for future stories or a refresh).
+
+| Placement | Layers | `background-position` | `background-size` |
+| --- | --- | --- | --- |
+| **corner** | 4 (motif rotated `0/90/180/270` about centre) | `top left, top right, bottom right, bottom left` | `124px 124px` |
+| **edge** | 4 (motif rotated `0/90/180/270`, oriented from the top edge inward) | `top center, right center, bottom center, left center` | `104px 104px` |
+| **scatter** | 1 (one full-panel SVG of strewn dots/rings) | `center` | `100% 100%` |
+
+Motif catalog (all corner-placed):
+
+| Motif | Look |
+| --- | --- |
+| `vine` | leafy vine sweeping along both edges with spiral terminals + a bloom |
+| `baroque` | symmetric paired C-scrolls ending in spirals |
+| `fan` | curved ribs radiating from the corner, each tipped with a leaf |
+| `rosette` | framing scrolls with a five-petal bloom nested in the corner |
+| `lattice` | interlaced squared scroll with arrow terminals (the one non-floral motif) |
+| `beaded` | a scroll trailed by a graduated chain of beads |
+| `feather` | long flowing calligraphic ribbons with spiral terminals |
+
+Current per-story ornament:
+
+| Story | Motif |
+| --- | --- |
+| tentang-tawakal | vine |
+| tentang-jujur | baroque |
+| tentang-taubat | fan |
+| tentang-berbakti-kepada-orang-tua | rosette |
+| tentang-silaturahmi | lattice |
+| tentang-ikhlas | beaded |
+| tentang-syukur | feather |
+
+Example — the four corner layers on `.panel::before` (the first url() is the
+raw top-left SVG; the other three are the same SVG wrapped in
+`rotate(90|180|270 36 36)`):
+
+```css
+.panel { position: relative; }              /* add to the existing rule */
+.panel::before {
+	content: "";
+	position: absolute;
+	inset: 6px;
+	pointer-events: none;
+	/* TL layer, un-rotated (illustrative — real motifs are more detailed):
+	   <svg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'>
+	     <g fill='none' stroke='#fff' stroke-width='1.4' stroke-linecap='round' opacity='.6'>
+	       <path d='M10 10 C19 10 24 16 24 24 C24 30 19 33 15 30 C12 28 13 23 17 24'/>
+	       <path d='M22 10 C38 9 50 12 58 22 C61 26 62 30 66 31'/>
+	     </g>
+	     <path d='M34 10 Q41 4 43 11 Q36 16 34 10 Z' fill='#fff' opacity='.42'/>
+	   </svg> */
+	background-image: url("data:image/svg+xml,%3Csvg…%3C/svg%3E"), /* TL */
+	                  url("data:image/svg+xml,%3Csvg…rotate(90 36 36)…%3C/svg%3E"),  /* TR */
+	                  url("data:image/svg+xml,%3Csvg…rotate(180 36 36)…%3C/svg%3E"), /* BR */
+	                  url("data:image/svg+xml,%3Csvg…rotate(270 36 36)…%3C/svg%3E"); /* BL */
+	background-repeat: no-repeat;
+	background-position: top left, top right, bottom right, bottom left;
+	background-size: 124px 124px;
+}
+```
+
+#### Reusable edge & scatter motifs
+
+Kept here so they can be dropped back in without re-deriving them. Same
+`.panel::before` rules (white ~0.5 opacity, URL-encoded) — only the
+`background-position` / `background-size` change (see the placement table).
+
+**Edge motifs** — authored in a `0 0 48 48` viewBox oriented for the **top
+edge** (pointing inward), then rotated `0/90/180/270` about `24 24` for the
+top/right/bottom/left layers:
+
+```text
+leaf  (botanical petal pointing inward)
+  <path d='M24 6 C16 14 16 23 24 30 C32 23 32 14 24 6 Z' fill='#fff' opacity='.12'/>
+  <path d='M24 6 C16 14 16 23 24 30' fill='none' stroke='#fff' stroke-width='1.3' stroke-linecap='round' opacity='.5'/>
+  <path d='M24 6 C32 14 32 23 24 30' fill='none' stroke='#fff' stroke-width='1.3' stroke-linecap='round' opacity='.5'/>
+
+gem  (diamond flanked by two short dashes)
+  <g fill='none' stroke='#fff' stroke-width='1.4' stroke-linecap='round' opacity='.5'>
+    <path d='M24 6 L33 15 L24 24 L15 15 Z'/>
+    <line x1='6' y1='11' x2='14' y2='11'/><line x1='34' y1='11' x2='42' y2='11'/>
+  </g>
+  <circle cx='24' cy='15' r='2' fill='#fff' opacity='.55'/>
+```
+
+**Scatter** — one full-panel SVG (e.g. `viewBox='0 0 240 420'`) holding ~24
+randomly-placed circles, set as a single `background-size: 100% 100%` layer
+centred on the panel. Filled circles = `dots`; `fill='none'
+stroke='#fff'` = `rings`. Vary radius ~3–8 and `opacity` ~0.18–0.45 for a
+gentle confetti texture:
+
+```text
+<svg xmlns='http://www.w3.org/2000/svg' width='240' height='420' viewBox='0 0 240 420'>
+  <circle cx='38'  cy='52'  r='5'   fill='#fff' opacity='.30'/>
+  <circle cx='196' cy='120' r='4'   fill='#fff' opacity='.22'/>
+  <circle cx='150' cy='300' r='6'   fill='#fff' opacity='.35'/>
+  …(generate the rest with a seeded RNG so the layout is reproducible)…
+</svg>
+```
+
+To add a new one: hand-author a fresh `0 0 72 72` corner motif (white,
+`opacity` ~0.5) distinct from neighbouring stories, URL-encode it, drop the
+four rotated copies into the `background-image` slots above, add
+`position: relative` to `.panel`, then run `pnpm run validate` and confirm the
+`<style amp-custom>` stays under 75 KB.
+
 3. **Sync the landing page** — run `pnpm run generate:index` and commit
    `src/index.html`. This only rewrites the cards between the
    `<!-- stories:start -->` / `<!-- stories:end -->` markers inside
