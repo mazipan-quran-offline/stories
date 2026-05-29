@@ -210,12 +210,12 @@ these rules:
 - **CSS-only, inline SVG.** The art is four `background-image:
   url("data:image/svg+xml,…")` layers on `.panel::before` — the *same* motif
   placed in each corner, rotated `0/90/180/270` about the viewBox centre
-  (`<g transform='rotate(90 32 32)'>…`). Add `position: relative;` to
+  (`<g transform='rotate(90 36 36)'>…`). Add `position: relative;` to
   `.panel`, and give the pseudo-element
   `content: ""; position: absolute; inset: 6px; pointer-events: none;` with
   `background-repeat: no-repeat`,
   `background-position: top left, top right, bottom right, bottom left`, and
-  `background-size: 116px 116px`. Data-URI SVG backgrounds are AMP-valid —
+  `background-size: 124px 124px`. Data-URI SVG backgrounds are AMP-valid —
   `pnpm run validate` still passes.
 - **Original art only — never embed licensed assets.** Hand-author the SVGs.
   Stock vectors (e.g. Freepik/macrovector) may be used as *visual inspiration*
@@ -226,12 +226,12 @@ these rules:
   fine for the ornament to overlap the verse text — it reads as a watermark,
   not clutter. URL-encode the SVG (`#` → `%23`, quotes/spaces escaped);
   single-quote all attributes inside.
-- **Authoring canvas.** Each motif lives in a `0 0 64 64` viewBox oriented for
+- **Authoring canvas.** Each motif lives in a `0 0 72 72` viewBox oriented for
   the **top-left** corner, built from: a thin frame line hugging the two
-  edges, a flowing scroll/vine, a few filled leaves/petals, and small accent
-  dots. Aim for an intricate look but keep it compact (~1.5–2.5 KB raw); ×4
-  rotated copies must leave the whole `<style amp-custom>` under AMP's
-  **75 KB** cap (current stories sit ~8 KB).
+  edges, a flowing scroll/vine with spiral terminals, a few filled
+  leaves/petals, and small accent dots. Aim for an intricate look but keep it
+  compact (~2–3 KB raw); ×4 rotated copies must leave the whole
+  `<style amp-custom>` under AMP's **75 KB** cap (current stories sit ~8–10 KB).
 - **The 3 oldest stories stay plain.** `tentang-menuntut-ilmu`,
   `tentang-sabar`, `tentang-sedekah` are full-bleed-image stories with no
   `.panel` scrim — leave them untouched.
@@ -242,13 +242,13 @@ Motif catalog (all corner-placed):
 
 | Motif | Look |
 | --- | --- |
-| `vine` | leafy vine sweeping along both edges with teardrop leaves |
-| `baroque` | symmetric double C-scroll with a central palmette |
-| `fan` | leaves radiating from the corner, peacock/wheat-like |
-| `rosette` | framing arcs with a four-petal rosette at the corner |
-| `lattice` | interlaced geometric loops (the one non-floral motif) |
-| `beaded` | a scroll trailed by a chain of beads/dots |
-| `feather` | long flowing calligraphic curls, minimal leaves |
+| `vine` | leafy vine sweeping along both edges with spiral terminals + a bloom |
+| `baroque` | symmetric paired C-scrolls ending in spirals |
+| `fan` | curved ribs radiating from the corner, each tipped with a leaf |
+| `rosette` | framing scrolls with a five-petal bloom nested in the corner |
+| `lattice` | interlaced squared scroll with arrow terminals (the one non-floral motif) |
+| `beaded` | a scroll trailed by a graduated chain of beads |
+| `feather` | long flowing calligraphic ribbons with spiral terminals |
 
 Current per-story ornament:
 
@@ -264,7 +264,7 @@ Current per-story ornament:
 
 Example — the four corner layers on `.panel::before` (the first url() is the
 raw top-left SVG; the other three are the same SVG wrapped in
-`rotate(90|180|270 32 32)`):
+`rotate(90|180|270 36 36)`):
 
 ```css
 .panel { position: relative; }              /* add to the existing rule */
@@ -274,24 +274,24 @@ raw top-left SVG; the other three are the same SVG wrapped in
 	inset: 6px;
 	pointer-events: none;
 	/* TL layer, un-rotated (illustrative — real motifs are more detailed):
-	   <svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'>
-	     <g fill='none' stroke='#fff' stroke-width='1.3' stroke-linecap='round' opacity='.55'>
-	       <path d='M9 22 L9 11 Q9 9 11 9 L22 9'/>
-	       <path d='M22 9 C36 9 44 11 50 16 C54 19 56 22 61 22'/>
+	   <svg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'>
+	     <g fill='none' stroke='#fff' stroke-width='1.4' stroke-linecap='round' opacity='.6'>
+	       <path d='M10 10 C19 10 24 16 24 24 C24 30 19 33 15 30 C12 28 13 23 17 24'/>
+	       <path d='M22 10 C38 9 50 12 58 22 C61 26 62 30 66 31'/>
 	     </g>
-	     <path d='M40 12 C45 8 51 9 54 13 C49 16 43 16 40 12 Z' fill='#fff' opacity='.4'/>
+	     <path d='M34 10 Q41 4 43 11 Q36 16 34 10 Z' fill='#fff' opacity='.42'/>
 	   </svg> */
 	background-image: url("data:image/svg+xml,%3Csvg…%3C/svg%3E"), /* TL */
-	                  url("data:image/svg+xml,%3Csvg…rotate(90 32 32)…%3C/svg%3E"),  /* TR */
-	                  url("data:image/svg+xml,%3Csvg…rotate(180 32 32)…%3C/svg%3E"), /* BR */
-	                  url("data:image/svg+xml,%3Csvg…rotate(270 32 32)…%3C/svg%3E"); /* BL */
+	                  url("data:image/svg+xml,%3Csvg…rotate(90 36 36)…%3C/svg%3E"),  /* TR */
+	                  url("data:image/svg+xml,%3Csvg…rotate(180 36 36)…%3C/svg%3E"), /* BR */
+	                  url("data:image/svg+xml,%3Csvg…rotate(270 36 36)…%3C/svg%3E"); /* BL */
 	background-repeat: no-repeat;
 	background-position: top left, top right, bottom right, bottom left;
-	background-size: 116px 116px;
+	background-size: 124px 124px;
 }
 ```
 
-To add a new one: hand-author a fresh `0 0 64 64` corner motif (white,
+To add a new one: hand-author a fresh `0 0 72 72` corner motif (white,
 `opacity` ~0.5) distinct from neighbouring stories, URL-encode it, drop the
 four rotated copies into the `background-image` slots above, add
 `position: relative` to `.panel`, then run `pnpm run validate` and confirm the
