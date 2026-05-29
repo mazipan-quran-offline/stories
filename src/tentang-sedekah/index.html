@@ -133,6 +133,60 @@
 			font-family: 'Merienda One', cursive;
 			font-size: 1.2rem;
 		}
+
+		#next-story {
+			background-image: linear-gradient(135deg, #fbbf24 0%, #f97316 50%, #ef4444 100%);
+		}
+
+		.ns-link {
+			display: block;
+			width: 100%;
+			height: 100%;
+			text-decoration: none;
+			color: #fff;
+		}
+
+		.ns-page {
+			width: 100%;
+			height: 100%;
+			box-sizing: border-box;
+			display: flex;
+			padding: 0.9rem 0.75rem;
+		}
+
+		.ns-panel {
+			flex: 1 1 auto;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			box-sizing: border-box;
+			background: rgba(0, 0, 0, 0.4);
+			border-radius: 18px;
+			padding: 1.1rem 1rem;
+			text-align: center;
+		}
+
+		.ns-kicker {
+			text-transform: uppercase;
+			letter-spacing: 0.16em;
+			font-size: 0.72rem;
+			opacity: 0.9;
+			margin: 0 0 1.2rem 0;
+		}
+
+		.ns-title {
+			font-size: 2rem;
+			font-weight: 700;
+			line-height: 1.25;
+			margin: 0 0 1.2rem 0;
+		}
+
+		.ns-hint {
+			font-size: 0.85rem;
+			opacity: 0.8;
+			margin: 0;
+		}
 	</style>
 
 	<script async src="https://cdn.ampproject.org/v0.js"></script>
@@ -260,6 +314,20 @@
 						Dan barang-siapa dijaga dirinya dari kekikiran, mereka itulah orang-orang yang beruntung.
 					</p>
 				</div>
+			</amp-story-grid-layer>
+		</amp-story-page>
+
+		<amp-story-page id="next-story">
+			<amp-story-grid-layer template="fill">
+				<a class="ns-link" href="https://www.baca-quran.id/stories/tentang-sabar/" target="_blank" rel="noopener">
+					<div class="ns-page">
+						<div class="ns-panel">
+							<p class="ns-kicker" animate-in="fade-in" animate-in-duration="0.6s" animate-in-timing-function="ease-out" animate-in-delay="0.15s">Cerita Selanjutnya</p>
+							<h2 class="ns-title" animate-in="zoom-in" animate-in-duration="0.8s" animate-in-timing-function="ease-out" animate-in-delay="0.4s">Tentang Sabar</h2>
+							<p class="ns-hint" animate-in="fade-in" animate-in-duration="0.7s" animate-in-timing-function="ease-out" animate-in-delay="0.85s">Ketuk untuk melanjutkan ↗</p>
+						</div>
+					</div>
+				</a>
 			</amp-story-grid-layer>
 		</amp-story-page>
 
