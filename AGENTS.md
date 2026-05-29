@@ -200,6 +200,103 @@ Current per-theme motion (cover / verse A / verse B, tempo):
 | tentang-berbakti-kepada-orang-tua | drop | fly-in-bottom / drop | 0.9s ease-out |
 | tentang-silaturahmi | fly-in-left | fly-in-left / fly-in-right | 0.9s ease-out |
 
+### Panel ornaments — decorate the scrim with inline-SVG accents
+
+Gradient stories carry an **ornate vintage-filigree corner ornament** on the
+verse `.panel`, drawn entirely in CSS via a `.panel::before` pseudo-element —
+**no markup changes**, so it applies to every page of a story at once. Keep
+these rules:
+
+- **CSS-only, inline SVG.** The art is four `background-image:
+  url("data:image/svg+xml,…")` layers on `.panel::before` — the *same* motif
+  placed in each corner, rotated `0/90/180/270` about the viewBox centre
+  (`<g transform='rotate(90 32 32)'>…`). Add `position: relative;` to
+  `.panel`, and give the pseudo-element
+  `content: ""; position: absolute; inset: 6px; pointer-events: none;` with
+  `background-repeat: no-repeat`,
+  `background-position: top left, top right, bottom right, bottom left`, and
+  `background-size: 116px 116px`. Data-URI SVG backgrounds are AMP-valid —
+  `pnpm run validate` still passes.
+- **Original art only — never embed licensed assets.** Hand-author the SVGs.
+  Stock vectors (e.g. Freepik/macrovector) may be used as *visual inspiration*
+  only; do not paste their paths or commit their files (licensing +
+  attribution strings we don't want in the repo).
+- **White at ~half opacity.** Strokes/fills are `#ffffff` at `opacity` ~0.5
+  (strokes ~0.55, filled leaves ~0.4, accent dots ~0.6). At that strength it's
+  fine for the ornament to overlap the verse text — it reads as a watermark,
+  not clutter. URL-encode the SVG (`#` → `%23`, quotes/spaces escaped);
+  single-quote all attributes inside.
+- **Authoring canvas.** Each motif lives in a `0 0 64 64` viewBox oriented for
+  the **top-left** corner, built from: a thin frame line hugging the two
+  edges, a flowing scroll/vine, a few filled leaves/petals, and small accent
+  dots. Aim for an intricate look but keep it compact (~1.5–2.5 KB raw); ×4
+  rotated copies must leave the whole `<style amp-custom>` under AMP's
+  **75 KB** cap (current stories sit ~8 KB).
+- **The 3 oldest stories stay plain.** `tentang-menuntut-ilmu`,
+  `tentang-sabar`, `tentang-sedekah` are full-bleed-image stories with no
+  `.panel` scrim — leave them untouched.
+- **One distinct motif per story** so the catalog doesn't feel templated;
+  don't reuse a neighbour's motif.
+
+Motif catalog (all corner-placed):
+
+| Motif | Look |
+| --- | --- |
+| `vine` | leafy vine sweeping along both edges with teardrop leaves |
+| `baroque` | symmetric double C-scroll with a central palmette |
+| `fan` | leaves radiating from the corner, peacock/wheat-like |
+| `rosette` | framing arcs with a four-petal rosette at the corner |
+| `lattice` | interlaced geometric loops (the one non-floral motif) |
+| `beaded` | a scroll trailed by a chain of beads/dots |
+| `feather` | long flowing calligraphic curls, minimal leaves |
+
+Current per-story ornament:
+
+| Story | Motif |
+| --- | --- |
+| tentang-tawakal | vine |
+| tentang-jujur | baroque |
+| tentang-taubat | fan |
+| tentang-berbakti-kepada-orang-tua | rosette |
+| tentang-silaturahmi | lattice |
+| tentang-ikhlas | beaded |
+| tentang-syukur | feather |
+
+Example — the four corner layers on `.panel::before` (the first url() is the
+raw top-left SVG; the other three are the same SVG wrapped in
+`rotate(90|180|270 32 32)`):
+
+```css
+.panel { position: relative; }              /* add to the existing rule */
+.panel::before {
+	content: "";
+	position: absolute;
+	inset: 6px;
+	pointer-events: none;
+	/* TL layer, un-rotated (illustrative — real motifs are more detailed):
+	   <svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'>
+	     <g fill='none' stroke='#fff' stroke-width='1.3' stroke-linecap='round' opacity='.55'>
+	       <path d='M9 22 L9 11 Q9 9 11 9 L22 9'/>
+	       <path d='M22 9 C36 9 44 11 50 16 C54 19 56 22 61 22'/>
+	     </g>
+	     <path d='M40 12 C45 8 51 9 54 13 C49 16 43 16 40 12 Z' fill='#fff' opacity='.4'/>
+	   </svg> */
+	background-image: url("data:image/svg+xml,%3Csvg…%3C/svg%3E"), /* TL */
+	                  url("data:image/svg+xml,%3Csvg…rotate(90 32 32)…%3C/svg%3E"),  /* TR */
+	                  url("data:image/svg+xml,%3Csvg…rotate(180 32 32)…%3C/svg%3E"), /* BR */
+	                  url("data:image/svg+xml,%3Csvg…rotate(270 32 32)…%3C/svg%3E"); /* BL */
+	background-repeat: no-repeat;
+	background-position: top left, top right, bottom right, bottom left;
+	background-size: 116px 116px;
+}
+```
+
+To add a new one: hand-author a fresh `0 0 64 64` corner motif (white,
+`opacity` ~0.5) distinct from neighbouring stories, URL-encode it, drop the
+four rotated copies into the `background-image` slots above, add
+`position: relative` to `.panel`, then run `pnpm run validate` and confirm the
+`<style amp-custom>` stays under 75 KB.
+
 3. **Sync the landing page** — run `pnpm run generate:index` and commit
    `src/index.html`. This only rewrites the cards between the
    `<!-- stories:start -->` / `<!-- stories:end -->` markers inside
