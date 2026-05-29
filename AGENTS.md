@@ -238,6 +238,19 @@ these rules:
 - **One distinct motif per story** so the catalog doesn't feel templated;
   don't reuse a neighbour's motif.
 
+#### Placement styles
+
+All three are just different `background-position` / `background-size` sets on
+the same `.panel::before`. **Corner** is the current house style; **edge** and
+**scatter** are documented below as ready-to-reuse variants (we've used them
+before — keep them in the toolbox for future stories or a refresh).
+
+| Placement | Layers | `background-position` | `background-size` |
+| --- | --- | --- | --- |
+| **corner** | 4 (motif rotated `0/90/180/270` about centre) | `top left, top right, bottom right, bottom left` | `124px 124px` |
+| **edge** | 4 (motif rotated `0/90/180/270`, oriented from the top edge inward) | `top center, right center, bottom center, left center` | `104px 104px` |
+| **scatter** | 1 (one full-panel SVG of strewn dots/rings) | `center` | `100% 100%` |
+
 Motif catalog (all corner-placed):
 
 | Motif | Look |
@@ -289,6 +302,45 @@ raw top-left SVG; the other three are the same SVG wrapped in
 	background-position: top left, top right, bottom right, bottom left;
 	background-size: 124px 124px;
 }
+```
+
+#### Reusable edge & scatter motifs
+
+Kept here so they can be dropped back in without re-deriving them. Same
+`.panel::before` rules (white ~0.5 opacity, URL-encoded) — only the
+`background-position` / `background-size` change (see the placement table).
+
+**Edge motifs** — authored in a `0 0 48 48` viewBox oriented for the **top
+edge** (pointing inward), then rotated `0/90/180/270` about `24 24` for the
+top/right/bottom/left layers:
+
+```text
+leaf  (botanical petal pointing inward)
+  <path d='M24 6 C16 14 16 23 24 30 C32 23 32 14 24 6 Z' fill='#fff' opacity='.12'/>
+  <path d='M24 6 C16 14 16 23 24 30' fill='none' stroke='#fff' stroke-width='1.3' stroke-linecap='round' opacity='.5'/>
+  <path d='M24 6 C32 14 32 23 24 30' fill='none' stroke='#fff' stroke-width='1.3' stroke-linecap='round' opacity='.5'/>
+
+gem  (diamond flanked by two short dashes)
+  <g fill='none' stroke='#fff' stroke-width='1.4' stroke-linecap='round' opacity='.5'>
+    <path d='M24 6 L33 15 L24 24 L15 15 Z'/>
+    <line x1='6' y1='11' x2='14' y2='11'/><line x1='34' y1='11' x2='42' y2='11'/>
+  </g>
+  <circle cx='24' cy='15' r='2' fill='#fff' opacity='.55'/>
+```
+
+**Scatter** — one full-panel SVG (e.g. `viewBox='0 0 240 420'`) holding ~24
+randomly-placed circles, set as a single `background-size: 100% 100%` layer
+centred on the panel. Filled circles = `dots`; `fill='none'
+stroke='#fff'` = `rings`. Vary radius ~3–8 and `opacity` ~0.18–0.45 for a
+gentle confetti texture:
+
+```text
+<svg xmlns='http://www.w3.org/2000/svg' width='240' height='420' viewBox='0 0 240 420'>
+  <circle cx='38'  cy='52'  r='5'   fill='#fff' opacity='.30'/>
+  <circle cx='196' cy='120' r='4'   fill='#fff' opacity='.22'/>
+  <circle cx='150' cy='300' r='6'   fill='#fff' opacity='.35'/>
+  …(generate the rest with a seeded RNG so the layout is reproducible)…
+</svg>
 ```
 
 To add a new one: hand-author a fresh `0 0 72 72` corner motif (white,
