@@ -6,39 +6,11 @@
   },
   "stories": [
     {
-      "slug": "tentang-syukur",
-      "title": "Tentang Syukur",
-      "description": "Kumpulan quote tentang syukur yang diambil dari ayat-ayat Al-Quran",
-      "publishedDate": "2026-04-15",
-      "gradient": "linear-gradient(135deg, #ec4899 0%, #ef4444 50%, #fbbf24 100%)"
-    },
-    {
-      "slug": "tentang-tawakal",
-      "title": "Tentang Tawakal",
-      "description": "Kumpulan quote tentang tawakal yang diambil dari ayat-ayat Al-Quran",
-      "publishedDate": "2026-04-22",
-      "gradient": "linear-gradient(135deg, #10b981 0%, #14b8a6 50%, #06b6d4 100%)"
-    },
-    {
-      "slug": "tentang-ikhlas",
-      "title": "Tentang Ikhlas",
-      "description": "Kumpulan quote tentang ikhlas yang diambil dari ayat-ayat Al-Quran",
-      "publishedDate": "2026-04-29",
-      "gradient": "linear-gradient(135deg, #a855f7 0%, #8b5cf6 50%, #4f46e5 100%)"
-    },
-    {
-      "slug": "tentang-taubat",
-      "title": "Tentang Taubat",
-      "description": "Kumpulan quote tentang taubat yang diambil dari ayat-ayat Al-Quran",
-      "publishedDate": "2026-05-06",
-      "gradient": "linear-gradient(135deg, #1d4ed8 0%, #4338ca 50%, #6b21a8 100%)"
-    },
-    {
-      "slug": "tentang-jujur",
-      "title": "Tentang Jujur",
-      "description": "Kumpulan quote tentang jujur yang diambil dari ayat-ayat Al-Quran",
-      "publishedDate": "2026-05-13",
-      "gradient": "linear-gradient(135deg, #84cc16 0%, #22c55e 50%, #059669 100%)"
+      "slug": "tentang-silaturahmi",
+      "title": "Tentang Silaturahmi",
+      "description": "Kumpulan quote tentang silaturahmi yang diambil dari ayat-ayat Al-Quran",
+      "publishedDate": "2026-05-27",
+      "gradient": "linear-gradient(135deg, #22d3ee 0%, #0ea5e9 50%, #2563eb 100%)"
     },
     {
       "slug": "tentang-berbakti-kepada-orang-tua",
@@ -48,11 +20,39 @@
       "gradient": "linear-gradient(135deg, #fb7185 0%, #d946ef 50%, #6366f1 100%)"
     },
     {
-      "slug": "tentang-silaturahmi",
-      "title": "Tentang Silaturahmi",
-      "description": "Kumpulan quote tentang silaturahmi yang diambil dari ayat-ayat Al-Quran",
-      "publishedDate": "2026-05-27",
-      "gradient": "linear-gradient(135deg, #22d3ee 0%, #0ea5e9 50%, #2563eb 100%)"
+      "slug": "tentang-jujur",
+      "title": "Tentang Jujur",
+      "description": "Kumpulan quote tentang jujur yang diambil dari ayat-ayat Al-Quran",
+      "publishedDate": "2026-05-13",
+      "gradient": "linear-gradient(135deg, #84cc16 0%, #22c55e 50%, #059669 100%)"
+    },
+    {
+      "slug": "tentang-taubat",
+      "title": "Tentang Taubat",
+      "description": "Kumpulan quote tentang taubat yang diambil dari ayat-ayat Al-Quran",
+      "publishedDate": "2026-05-06",
+      "gradient": "linear-gradient(135deg, #1d4ed8 0%, #4338ca 50%, #6b21a8 100%)"
+    },
+    {
+      "slug": "tentang-ikhlas",
+      "title": "Tentang Ikhlas",
+      "description": "Kumpulan quote tentang ikhlas yang diambil dari ayat-ayat Al-Quran",
+      "publishedDate": "2026-04-29",
+      "gradient": "linear-gradient(135deg, #a855f7 0%, #8b5cf6 50%, #4f46e5 100%)"
+    },
+    {
+      "slug": "tentang-tawakal",
+      "title": "Tentang Tawakal",
+      "description": "Kumpulan quote tentang tawakal yang diambil dari ayat-ayat Al-Quran",
+      "publishedDate": "2026-04-22",
+      "gradient": "linear-gradient(135deg, #10b981 0%, #14b8a6 50%, #06b6d4 100%)"
+    },
+    {
+      "slug": "tentang-syukur",
+      "title": "Tentang Syukur",
+      "description": "Kumpulan quote tentang syukur yang diambil dari ayat-ayat Al-Quran",
+      "publishedDate": "2026-04-15",
+      "gradient": "linear-gradient(135deg, #ec4899 0%, #ef4444 50%, #fbbf24 100%)"
     },
     {
       "slug": "tentang-menuntut-ilmu",
