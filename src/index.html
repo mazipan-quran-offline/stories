@@ -587,13 +587,29 @@
 			padding: 2.8rem 1.5rem 1.5rem;
 			display: grid;
 			gap: 2rem;
-			grid-template-columns: 1fr;
+			grid-template-columns: repeat(2, 1fr);
 		}
 
 		@media (min-width: 44rem) {
 			.footer-inner {
-				grid-template-columns: 2fr 1fr;
+				grid-template-columns: 1.6fr repeat(3, 1fr);
 				gap: 2.5rem;
+			}
+		}
+
+		@media (min-width: 60rem) {
+			.footer-inner {
+				grid-template-columns: 1.6fr repeat(4, 1fr);
+			}
+		}
+
+		.footer-brand {
+			grid-column: 1 / -1;
+		}
+
+		@media (min-width: 44rem) {
+			.footer-brand {
+				grid-column: auto;
 			}
 		}
 
@@ -891,6 +907,34 @@
 					<span>Web Stories</span>
 				</a>
 				<p>Cerita visual singkat dari ayat-ayat Al-Quran, dipersembahkan oleh Baca-Quran.id agar lebih dekat dengan firman-Nya, di mana saja.</p>
+			</div>
+			<div class="footer-col">
+				<h4>Al-Qur'an</h4>
+				<ul>
+					<li><a href="https://www.baca-quran.id/all-surah/" target="_blank" rel="noopener noreferrer">Semua Surah</a></li>
+					<li><a href="https://www.baca-quran.id/surah/1/1/" target="_blank" rel="noopener noreferrer">Baca Per Ayat</a></li>
+					<li><a href="https://www.baca-quran.id/juz-amma/" target="_blank" rel="noopener noreferrer">Juz Amma</a></li>
+					<li><a href="https://www.baca-quran.id/ayat-kursi/" target="_blank" rel="noopener noreferrer">Ayat Kursi</a></li>
+				</ul>
+			</div>
+			<div class="footer-col">
+				<h4>Doa &amp; Dzikir</h4>
+				<ul>
+					<li><a href="https://www.baca-quran.id/daily-doa/" target="_blank" rel="noopener noreferrer">Doa Harian</a></li>
+					<li><a href="https://www.baca-quran.id/wirid/" target="_blank" rel="noopener noreferrer">Wirid</a></li>
+					<li><a href="https://www.baca-quran.id/adhkar/" target="_blank" rel="noopener noreferrer">Dzikir Pagi &amp; Petang</a></li>
+					<li><a href="https://www.baca-quran.id/tasbih/" target="_blank" rel="noopener noreferrer">Tasbih</a></li>
+					<li><a href="https://www.baca-quran.id/tahlil/" target="_blank" rel="noopener noreferrer">Tahlil</a></li>
+				</ul>
+			</div>
+			<div class="footer-col">
+				<h4>Fitur Lainnya</h4>
+				<ul>
+					<li><a href="https://www.baca-quran.id/asmaul-husna/" target="_blank" rel="noopener noreferrer">Asmaul Husna</a></li>
+					<li><a href="https://www.baca-quran.id/jadwal-sholat/" target="_blank" rel="noopener noreferrer">Jadwal Sholat</a></li>
+					<li><a href="https://www.baca-quran.id/pencatat-ibadah/" target="_blank" rel="noopener noreferrer">Pencatat Ibadah</a></li>
+					<li><a href="https://www.baca-quran.id/kalender-hijriyah/" target="_blank" rel="noopener noreferrer">Kalender Hijriyah</a></li>
+				</ul>
 			</div>
 			<div class="footer-col">
 				<h4>Tautan</h4>
