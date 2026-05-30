@@ -190,6 +190,12 @@ animation**, so don't promise one. Give each story a small motion identity:
   `fly-in-{top,bottom,left,right}`, `pan-{up,down,left,right}`, `zoom-in`,
   `zoom-out`, `rotate-in-{left,right}`, `twirl-in`, `whoosh-in-{left,right}`,
   `drop`, `pulse`.
+- **BANNED: `zoom-out` is strictly forbidden** — do NOT use `zoom-out` on any
+  element in any story page. In our AMP story context it causes text to scale
+  up to an enormous size and become invisible during the animation, making the
+  content completely unreadable. This applies everywhere: cover, verse pages,
+  and especially the end-of-story next-story slide. Use `fade-in`, `fly-in-*`,
+  `pan-*`, `zoom-in`, or any other preset instead.
 
 Current per-theme motion (cover / verse A / verse B, tempo):
 
@@ -457,6 +463,10 @@ To stage a story so it publishes automatically on a future date:
 
 ## Don'ts
 
+- **NEVER use `zoom-out` as an `animate-in` value** — it makes text scale to
+  an enormous size and turn invisible in our AMP story context. This is a
+  hard ban on every page of every story (cover, verse pages, next-story slide).
+  Use `fade-in`, `fly-in-*`, `pan-*`, `zoom-in`, or any other valid preset.
 - Don't bypass `format:check` with `--no-verify` or by editing the workflow.
 - Don't commit `dist/`, `node_modules/`, or `.parcel-cache/`.
 - Don't push directly to `master`; open a PR from a feature branch.
