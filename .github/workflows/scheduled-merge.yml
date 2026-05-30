@@ -1,0 +1,86 @@
+name: Scheduled Merge
+
+# Promotes "scheduled" content PRs to merge on their target date.
+#
+# How it works:
+#   1. Open a PR whose title contains a token: [publish: YYYY-MM-DD]
+#   2. This workflow runs every couple of days (cron) and on manual dispatch.
+#   3. When today's date in WIB (UTC+7) reaches the target date, it strips the
+#      token from the title and adds the `automerge` label.
+#   4. Kodiak (see .kodiak.toml) then merges the PR once branch-protection
+#      checks pass, and the push to master triggers the Deploy workflow.
+#
+# Note: this runs every ~2 days and GitHub cron can lag, so schedule PRs a few
+# days (ideally 1-2 weeks) before the target date. Publishing is date-level, not
+# time-precise.
+
+on:
+  schedule:
+    - cron: '0 17 */2 * *' # ~00:00 WIB, every 2 days
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  promote-due-prs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Promote due scheduled PRs
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const AUTOMERGE_LABEL = 'automerge';
+            const TOKEN_RE = /\[publish:\s*(\d{4}-\d{2}-\d{2})\]/i;
+
+            // Current calendar date in WIB (UTC+7).
+            const nowWib = new Date(Date.now() + 7 * 60 * 60 * 1000);
+            const today = nowWib.toISOString().slice(0, 10);
+            core.info(`Today (WIB): ${today}`);
+
+            const prs = await github.paginate(github.rest.pulls.list, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              base: 'master',
+              per_page: 100,
+            });
+
+            let promoted = 0;
+            for (const pr of prs) {
+              if (pr.draft) continue;
+              const match = pr.title.match(TOKEN_RE);
+              if (!match) continue;
+
+              const publishDate = match[1];
+              if (publishDate > today) {
+                core.info(`PR #${pr.number} scheduled for ${publishDate}, not due yet.`);
+                continue;
+              }
+
+              core.info(`PR #${pr.number} is due (${publishDate} <= ${today}). Promoting.`);
+
+              const cleanTitle = pr.title.replace(TOKEN_RE, '').replace(/\s{2,}/g, ' ').trim();
+              if (cleanTitle && cleanTitle !== pr.title) {
+                await github.rest.pulls.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: pr.number,
+                  title: cleanTitle,
+                });
+              }
+
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                labels: [AUTOMERGE_LABEL],
+              });
+              core.info(`PR #${pr.number} labelled '${AUTOMERGE_LABEL}' for Kodiak to merge.`);
+              promoted++;
+            }
+
+            core.info(`Done. Promoted ${promoted} PR(s).`);
