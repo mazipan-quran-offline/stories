@@ -54,7 +54,10 @@ src/
   index.html              # landing page template; only the card region is injected from content.json
   sitemap.xml             # GENERATED from content.json, do not hand-edit
   <story-slug>/index.html # individual web story (hand-written)
-.github/workflows/deploy.yml  # GH Pages deploy
+.github/workflows/ci.yml      # PR checks (format, AMP validate, build)
+.github/workflows/deploy.yml  # GH Pages deploy on push to master
+.github/workflows/scheduled-merge.yml  # promotes date-gated PRs via Kodiak
+.kodiak.toml              # Kodiak auto-merge config
 biome.json                # formatter + linter config
 pnpm-workspace.yaml       # holds allowBuilds / onlyBuiltDependencies
 ```
@@ -409,14 +412,48 @@ four rotated copies into the `background-image` slots above, add
 
 ## CI
 
-`.github/workflows/deploy.yml` runs on push to `master`:
-1. Checkout, setup Node from `.nvmrc`, enable Corepack.
-2. `pnpm install --frozen-lockfile` (so commit lockfile changes alongside
-   `package.json` edits).
-3. `pnpm run format:check` — must pass; run `pnpm run format` locally if it
-   fails.
-4. `pnpm run validate` — every AMP story must pass `amphtml-validator`.
-5. `pnpm run build` → publishes `./dist` to GitHub Pages.
+**`ci.yml`** — runs on every pull request to `master`:
+1. `pnpm run format:check`
+2. `pnpm run validate` — every AMP story must pass `amphtml-validator`.
+3. `pnpm run build`
+
+**`deploy.yml`** — runs on push to `master` (same steps + deploys `./dist` to GitHub Pages).
+
+**`scheduled-merge.yml`** — cron job (~00:00 WIB every 2 days) that promotes
+date-gated PRs; see [Scheduling a story for future publication](#scheduling-a-story-for-future-publication) below.
+
+## Scheduling a story for future publication
+
+To stage a story so it publishes automatically on a future date:
+
+1. **Open a PR normally** (feature branch → `master`) with all changes ready
+   to merge. The PR must pass CI.
+
+2. **Embed a publish token in the PR title:**
+
+   ```
+   Add story: Tentang Rezeki [publish: 2026-07-01]
+   ```
+
+   The token format is `[publish: YYYY-MM-DD]` (case-insensitive, spaces
+   around the date are optional).
+
+3. **Do not add the `automerge` label yourself.** The scheduled workflow adds
+   it automatically when the date is reached.
+
+4. **Wait.** `scheduled-merge.yml` runs roughly every 2 days (cron can lag).
+   When today's date in WIB (UTC+7) is on or after the publish date it will:
+   - Strip the `[publish: …]` token from the PR title.
+   - Add the `automerge` label.
+   - Kodiak (`.kodiak.toml`) then merges the PR once all branch-protection
+     checks pass, which triggers the deploy.
+
+5. **Lead time.** Because the cron runs every ~2 days and GitHub cron can lag,
+   open the PR at least a few days (ideally 1–2 weeks) before the target date.
+   Publishing is date-level, not time-precise.
+
+6. **To cancel scheduling**, close the PR or remove the token from the title
+   before the workflow promotes it.
 
 ## Don'ts
 
