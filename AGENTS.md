@@ -187,15 +187,23 @@ animation**, so don't promise one. Give each story a small motion identity:
 - **Alternate verse panels.** Use two complementary entrances (A/B) across
   consecutive verse pages so they don't all move identically.
 - **Valid presets** (the validator rejects unknown names): `fade-in`,
-  `fly-in-{top,bottom,left,right}`, `pan-{up,down,left,right}`, `zoom-in`,
-  `zoom-out`, `rotate-in-{left,right}`, `twirl-in`, `whoosh-in-{left,right}`,
+  `fly-in-{top,bottom,left,right}`, `pan-{up,down,left,right}`,
+  `rotate-in-{left,right}`, `twirl-in`, `whoosh-in-{left,right}`,
   `drop`, `pulse`.
+- **BANNED: `zoom-in` and `zoom-out` are both strictly forbidden.** Both
+  animations cause text to become invisible or scale to an unreadable size in
+  our AMP story context. Do not use them on any element, on any page
+  (cover, verse, or end-of-story next-story slide).
+- **Default when in doubt: `fly-in-left` / `fly-in-right`.** If you are
+  unsure which animation to pick, use `fly-in-left` for the cover title and
+  alternate `fly-in-left` / `fly-in-right` across verse panels. These are
+  reliable, readable, and work at any font size.
 
 Current per-theme motion (cover / verse A / verse B, tempo):
 
 | Story | Cover | Verse A / B | Tempo |
 | --- | --- | --- | --- |
-| tentang-syukur | zoom-in | fly-in-bottom / zoom-in | 0.8s ease-out |
+| tentang-syukur | fly-in-left | fly-in-bottom / fly-in-right | 0.8s ease-out |
 | tentang-tawakal | fade-in | pan-up / fade-in | 1.2s ease-in-out |
 | tentang-ikhlas | twirl-in | rotate-in-left / rotate-in-right | 1s ease-out |
 | tentang-taubat | fly-in-bottom | fly-in-bottom / fade-in | 1s ease-in-out |
@@ -457,6 +465,10 @@ To stage a story so it publishes automatically on a future date:
 
 ## Don'ts
 
+- **NEVER use `zoom-in` or `zoom-out` as an `animate-in` value** — both cause
+  text to become invisible or scale to an unreadable size in our AMP story
+  context. This is a hard ban on every page of every story (cover, verse pages,
+  next-story slide). When in doubt, use `fly-in-left` / `fly-in-right`.
 - Don't bypass `format:check` with `--no-verify` or by editing the workflow.
 - Don't commit `dist/`, `node_modules/`, or `.parcel-cache/`.
 - Don't push directly to `master`; open a PR from a feature branch.
