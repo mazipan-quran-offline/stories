@@ -296,6 +296,26 @@
 		.hero {
 			text-align: center;
 			padding: clamp(3.5rem, 9vw, 6.5rem) 0 clamp(2.5rem, 6vw, 4rem);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.hero::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background-image: radial-gradient(circle, var(--border-strong) 1px, transparent 1px);
+			background-size: 28px 28px;
+			-webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+			mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+			opacity: 0.45;
+			pointer-events: none;
+			z-index: 0;
+		}
+
+		.hero > * {
+			position: relative;
+			z-index: 1;
 		}
 
 		.eyebrow {
