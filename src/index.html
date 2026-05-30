@@ -296,6 +296,26 @@
 		.hero {
 			text-align: center;
 			padding: clamp(3.5rem, 9vw, 6.5rem) 0 clamp(2.5rem, 6vw, 4rem);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.hero::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background-image: radial-gradient(circle, var(--border-strong) 1px, transparent 1px);
+			background-size: 28px 28px;
+			-webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+			mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+			opacity: 0.45;
+			pointer-events: none;
+			z-index: 0;
+		}
+
+		.hero > * {
+			position: relative;
+			z-index: 1;
 		}
 
 		.eyebrow {
@@ -361,6 +381,7 @@
 			.hero-actions {
 				flex-direction: column;
 				align-items: stretch;
+				padding: 0 1.25rem;
 			}
 
 			.hero-actions .btn {
@@ -410,7 +431,7 @@
 		/* ---------- Section heading ---------- */
 		.section-head {
 			display: flex;
-			align-items: flex-end;
+			align-items: center;
 			justify-content: space-between;
 			gap: 1rem;
 			margin: 1rem 0 1.6rem;
@@ -430,6 +451,13 @@
 			color: var(--muted);
 			font-weight: 600;
 			white-space: nowrap;
+		}
+
+		/* ---------- Stories section ---------- */
+		.stories-section {
+			background: var(--bg-2);
+			padding: 2rem 0 3rem;
+			border-top: 1px solid var(--border);
 		}
 
 		/* ---------- Cards ---------- */
@@ -743,7 +771,8 @@
 			</div>
 		</section>
 
-		<section class="wrapper" id="stories">
+		<section class="stories-section" id="stories">
+			<div class="wrapper">
 			<div class="section-head">
 				<h2>Semua Cerita</h2>
 				<span class="count" id="storyCount"></span>
@@ -753,7 +782,7 @@
 				<li class="card">
 					<a class="card-link" href="/stories/tentang-silaturahmi/">
 						<span class="card-cover" style="background-image: linear-gradient(135deg, #22d3ee 0%, #0ea5e9 50%, #2563eb 100%);" aria-hidden="true">
-							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></span>
 						</span>
 						<span class="card-content">
 							<time class="card-date">27 Mei 2026</time>
@@ -766,7 +795,7 @@
 				<li class="card">
 					<a class="card-link" href="/stories/tentang-berbakti-kepada-orang-tua/">
 						<span class="card-cover" style="background-image: linear-gradient(135deg, #fb7185 0%, #d946ef 50%, #6366f1 100%);" aria-hidden="true">
-							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></span>
 						</span>
 						<span class="card-content">
 							<time class="card-date">20 Mei 2026</time>
@@ -779,7 +808,7 @@
 				<li class="card">
 					<a class="card-link" href="/stories/tentang-jujur/">
 						<span class="card-cover" style="background-image: linear-gradient(135deg, #84cc16 0%, #22c55e 50%, #059669 100%);" aria-hidden="true">
-							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></span>
 						</span>
 						<span class="card-content">
 							<time class="card-date">13 Mei 2026</time>
@@ -792,7 +821,7 @@
 				<li class="card">
 					<a class="card-link" href="/stories/tentang-taubat/">
 						<span class="card-cover" style="background-image: linear-gradient(135deg, #1d4ed8 0%, #4338ca 50%, #6b21a8 100%);" aria-hidden="true">
-							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></span>
 						</span>
 						<span class="card-content">
 							<time class="card-date">06 Mei 2026</time>
@@ -805,7 +834,7 @@
 				<li class="card">
 					<a class="card-link" href="/stories/tentang-ikhlas/">
 						<span class="card-cover" style="background-image: linear-gradient(135deg, #a855f7 0%, #8b5cf6 50%, #4f46e5 100%);" aria-hidden="true">
-							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></span>
 						</span>
 						<span class="card-content">
 							<time class="card-date">29 April 2026</time>
@@ -818,7 +847,7 @@
 				<li class="card">
 					<a class="card-link" href="/stories/tentang-tawakal/">
 						<span class="card-cover" style="background-image: linear-gradient(135deg, #10b981 0%, #14b8a6 50%, #06b6d4 100%);" aria-hidden="true">
-							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></span>
 						</span>
 						<span class="card-content">
 							<time class="card-date">22 April 2026</time>
@@ -831,7 +860,7 @@
 				<li class="card">
 					<a class="card-link" href="/stories/tentang-syukur/">
 						<span class="card-cover" style="background-image: linear-gradient(135deg, #ec4899 0%, #ef4444 50%, #fbbf24 100%);" aria-hidden="true">
-							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></span>
 						</span>
 						<span class="card-content">
 							<time class="card-date">15 April 2026</time>
@@ -844,7 +873,7 @@
 				<li class="card">
 					<a class="card-link" href="/stories/tentang-menuntut-ilmu/">
 						<span class="card-cover" style="background-image: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);" aria-hidden="true">
-							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></span>
 						</span>
 						<span class="card-content">
 							<time class="card-date">12 Juli 2020</time>
@@ -857,7 +886,7 @@
 				<li class="card">
 					<a class="card-link" href="/stories/tentang-sedekah/">
 						<span class="card-cover" style="background-image: linear-gradient(135deg, #fbbf24 0%, #f97316 50%, #ef4444 100%);" aria-hidden="true">
-							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></span>
 						</span>
 						<span class="card-content">
 							<time class="card-date">06 Juli 2020</time>
@@ -870,7 +899,7 @@
 				<li class="card">
 					<a class="card-link" href="/stories/tentang-sabar/">
 						<span class="card-cover" style="background-image: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #4f46e5 100%);" aria-hidden="true">
-							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+							<span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></span>
 						</span>
 						<span class="card-content">
 							<time class="card-date">02 Juli 2020</time>
@@ -882,6 +911,7 @@
 				</li>
 				<!-- stories:end -->
 			</ul>
+			</div>
 		</section>
 
 		<div class="adswrapper">
